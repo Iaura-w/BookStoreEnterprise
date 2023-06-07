@@ -8,7 +8,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>categories</title>
+    <title>Categories</title>
 </head>
 <body>
 ADD CATEGORY
@@ -17,13 +17,13 @@ ADD CATEGORY
     <table>
         <tbody>
         <tr>
-            <td><label>nazwa:</label></td>
-            <td><form:input path="nazwa" /></td>
+            <td><label>name:</label></td>
+            <td><form:input path="name"/></td>
         </tr>
 
         <tr>
             <td><label></label></td>
-            <td><input type="submit" value="Save" class="save" /></td>
+            <td><input type="submit" value="Save" class="save"/></td>
         </tr>
 
 
@@ -35,7 +35,7 @@ ADD CATEGORY
 
 
 <p>
-    <a href="${pageContext.request.contextPath}/categories/list "> return  </a>
+    <a href="${pageContext.request.contextPath}/categories/list "> return </a>
 </p>
 </body>
 </html>

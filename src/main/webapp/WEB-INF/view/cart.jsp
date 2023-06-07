@@ -6,48 +6,55 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Cart</title>
 </head>
 <body>
-        <h2>Cart:</h2>
+<nav>
+    <div>
+        <a href="${pageContext.request.contextPath}">Home</a>
+    </div>
+</nav>
+<h2>Cart:</h2>
 
-        <div>
-            <table>
-                <tr>
-                    <th>Autorzy</th>
-                    <th>Nazwa</th>
-                    <th>Wydawnictwo</th>
-                    <th>Cena</th>
-                    <th>Kategoria</th>
-                </tr>
-                <c:forEach var="book" items="${books}" >
-                    <tr>
+<div>
+    <table>
+        <tr>
+            <th>Authors</th>
+            <th>Name</th>
+            <th>Publisher</th>
+            <th>Price</th>
+            <th>Category</th>
+        </tr>
+        <c:forEach var="book" items="${books}">
+            <tr>
 
-                        <td>
-                        <c:forEach var="autor" items="${book.autorzy}">${autor.imie} ${autor.nazwisko} <br />
-                        </c:forEach>
-                        </td>
-                        <td>${book.nazwa}</td>
-                        <td>${book.wydawnictwo}</td>
-                        <td>${book.cena}</td>
-                        <td>${book.kategoria.nazwa}</td>
+                <td>
+                    <c:forEach var="author" items="${book.authors}">${author.name} ${author.lastName} <br/>
+                    </c:forEach>
+                </td>
+                <td>${book.name}</td>
+                <td>${book.publisher}</td>
+                <td>${book.price}</td>
+                <td>${book.category.name}</td>
 
-                        <td>
-                        <form:form action="${pageContext.request.contextPath}/cart/delete">
+                <td>
+                    <form:form action="${pageContext.request.contextPath}/cart/delete">
                         <input type="hidden" id="bookId" name="bookId" value="${book.id}"/>
-                        <button type="submit">Usuń</button>
-                        </form:form>
-                        </td>
-                    </tr>
-                </c:forEach>
+                        <button type="submit">delete</button>
+                    </form:form>
+                </td>
+            </tr>
+        </c:forEach>
 
-            </table>
-        </div>
-        <div>
-            <input type="button" value="Zamów"
-                   onclick="window.location.href='order';return false;" />
-        </div>
+    </table>
+</div>
+<div>
+    <input type="button" value="Order"
+           onclick="window.location.href='order';return false;"/>
+</div>
 </body>
 </html>

@@ -4,14 +4,14 @@ package org.example.dto;
 import java.util.List;
 
 public class BookDTO {
-    private String nazwa;
+    private String name;
 
     private int id;
-    private String wydawnictwo;
+    private String publisher;
 
-    private float cena;
+    private float price;
 
-    private int kategoriaid;
+    private int categoryid;
 
     private List<Integer> authorsIds;
 
@@ -26,36 +26,36 @@ public class BookDTO {
     public BookDTO() {
     }
 
-    public String getNazwa() {
-        return nazwa;
+    public String getName() {
+        return name;
     }
 
-    public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getWydawnictwo() {
-        return wydawnictwo;
+    public String getPublisher() {
+        return publisher;
     }
 
-    public void setWydawnictwo(String wydawnictwo) {
-        this.wydawnictwo = wydawnictwo;
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
-    public float getCena() {
-        return cena;
+    public float getPrice() {
+        return price;
     }
 
-    public void setCena(float cena) {
-        this.cena = cena;
+    public void setPrice(float price) {
+        this.price = price;
     }
 
-    public int getKategoriaid() {
-        return kategoriaid;
+    public int getCategoryid() {
+        return categoryid;
     }
 
-    public void setKategoriaid(int kategoriaid) {
-        this.kategoriaid = kategoriaid;
+    public void setCategoryid(int categoryid) {
+        this.categoryid = categoryid;
     }
 
     public List<Integer> getAuthorsIds() {

@@ -4,13 +4,13 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="utf-8">
-<title>Wylogowanie</title>
+    <meta charset="utf-8">
+    <title>Logout</title>
 </head>
 <body>
-<h3>Wylogowanie</h3>
+<h3>Logout</h3>
 <form:form method="post">
-<button type="submit" >Wyloguj</button>
+    <button type="submit">Logout</button>
 </form:form>
 </body>
 </html>

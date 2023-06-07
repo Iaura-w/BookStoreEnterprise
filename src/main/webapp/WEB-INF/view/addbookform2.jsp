@@ -8,7 +8,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>books</title>
+    <title>Books</title>
 </head>
 <body>
 ADD BOOK
@@ -18,46 +18,38 @@ ADD BOOK
     <table>
         <tbody>
         <tr>
-            <td><label>nazwa:</label></td>
-            <td><form:input path="nazwa" /></td>
+            <td><label>name:</label></td>
+            <td><form:input path="name"/></td>
         </tr>
 
         <tr>
-            <td><label>wydawnictwo:</label></td>
-            <td><form:input path="wydawnictwo" /></td>
+            <td><label>publisher:</label></td>
+            <td><form:input path="publisher"/></td>
         </tr>
 
         <tr>
-            <td><label>cena:</label></td>
-            <td><form:input path="cena" /></td>
+            <td><label>price:</label></td>
+            <td><form:input path="price"/></td>
         </tr>
         <tr>
-
             <td>
-                <form:select path="kategoriaid">
-                    <form:options items="${categories}" itemValue="id" itemLabel="nazwa"/>
+                <form:select path="categoryid">
+                    <form:options items="${categories}" itemValue="id" itemLabel="name"/>
                 </form:select>
-
             </td>
-
         </tr>
 
         <tr>
-
             <td>
                 <form:select path="authorsIds">
-                    <form:options items="${authors}" itemValue="id" itemLabel="nazwisko"/>
+                    <form:options items="${authors}" itemValue="id" itemLabel="lastName"/>
                 </form:select>
-
             </td>
-
         </tr>
         <tr>
             <td><label></label></td>
-            <td><input type="submit" value="Save"  /></td>
+            <td><input type="submit" value="Save"/></td>
         </tr>
-
-
         </tbody>
     </table>
 
@@ -66,7 +58,7 @@ ADD BOOK
 
 
 <p>
-    <a href="${pageContext.request.contextPath}/books/list "> return  </a>
+    <a href="${pageContext.request.contextPath}/books/list "> return </a>
 </p>
 </body>
 </html>

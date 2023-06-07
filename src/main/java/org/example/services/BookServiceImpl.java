@@ -2,13 +2,12 @@ package org.example.services;
 
 import org.example.dao.BookDAO;
 import org.example.dao.CategoryDAO;
-import org.example.entity.Ksiazka;
+import org.example.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -19,34 +18,34 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public List<Ksiazka> getBooks() {
-        List<Ksiazka> books = bookDAO.getBooks();
+    public List<Book> getBooks() {
+        List<Book> books = bookDAO.getBooks();
         return books;
     }
 
     @Override
     @Transactional
-    public void saveBook(Ksiazka ksiazka) {
-        //List<Kategoria> kategorie = categoryDAO.getCategories();
-        //ksiazka.setKategoria(kategorie.get(0));
-        bookDAO.saveBook(ksiazka);
+    public void saveBook(Book book) {
+        //List<Category> kategorie = categoryDAO.getCategories();
+        //book.setCategory(kategorie.get(0));
+        bookDAO.saveBook(book);
     }
 
     @Override
     @Transactional
-    public Ksiazka getBook(int id) {
+    public Book getBook(int id) {
         return bookDAO.getBook(id);
     }
 
     @Override
     @Transactional
-    public void deleteBook(Ksiazka ksiazka) {
-        bookDAO.deleteBook(ksiazka);
+    public void deleteBook(Book book) {
+        bookDAO.deleteBook(book);
     }
 
     @Override
     @Transactional
-    public List<Ksiazka> getBooksByIds(List<Integer> bookIds) {
+    public List<Book> getBooksByIds(List<Integer> bookIds) {
         return bookDAO.getBooksByIds(bookIds);
     }
 }

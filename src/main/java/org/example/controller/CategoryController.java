@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.entity.Kategoria;
+import org.example.entity.Category;
 import org.example.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,21 +21,21 @@ public class CategoryController {
 
     @GetMapping("/list")
     public String listCategories(Model model) {
-        List<Kategoria> categories = categoryService.getCategories();
+        List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
         return "categorylist";
     }
 
     @GetMapping("/formadd")
     public String addForm(Model model) {
-        Kategoria category = new Kategoria();
+        Category category = new Category();
         model.addAttribute("category", category);
         return "addcategoryform";
     }
 
     @PostMapping("/addCategory")
-    public String addCategory(@ModelAttribute("category") Kategoria kategoria) {
-        categoryService.addCategory(kategoria);
+    public String addCategory(@ModelAttribute("category") Category category) {
+        categoryService.addCategory(category);
         return "redirect:/categories/list";
     }
 }

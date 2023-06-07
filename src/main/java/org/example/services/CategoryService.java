@@ -1,13 +1,13 @@
 package org.example.services;
 
-import org.example.entity.Kategoria;
+import org.example.entity.Category;
 
 import java.util.List;
 
 public interface CategoryService {
-    List<Kategoria> getCategories();
+    List<Category> getCategories();
 
-    void addCategory(Kategoria kategoria);
+    void addCategory(Category category);
 
-    Kategoria getCategory(int id);
+    Category getCategory(int id);
 }

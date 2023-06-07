@@ -8,7 +8,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>authors</title>
+    <title>Authors</title>
 </head>
 <body>
 ADD AUTHOR
@@ -17,18 +17,18 @@ ADD AUTHOR
     <table>
         <tbody>
         <tr>
-            <td><label>imie:</label></td>
-            <td><form:input path="imie" /></td>
+            <td><label>name:</label></td>
+            <td><form:input path="name"/></td>
         </tr>
 
         <tr>
-            <td><label>nazwisko:</label></td>
-            <td><form:input path="nazwisko" /></td>
+            <td><label>last name:</label></td>
+            <td><form:input path="lastName"/></td>
         </tr>
 
         <tr>
             <td><label></label></td>
-            <td><input type="submit" value="Save" class="save" /></td>
+            <td><input type="submit" value="Save" class="save"/></td>
         </tr>
 
         </tbody>
@@ -39,7 +39,8 @@ ADD AUTHOR
 
 
 <p>
-    <a href="${pageContext.request.contextPath}/authors/list "> return  </a>
+    <a href="${pageContext.request.contextPath}/authors/list "> return </a>
 </p>
+
 </body>
 </html>

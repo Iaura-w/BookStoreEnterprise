@@ -1,13 +1,11 @@
 package org.example.dao;
 
-import org.example.entity.Kategoria;
+import org.example.entity.Category;
 
 import java.util.List;
 
 public interface CategoryDAO {
-    List<Kategoria> getCategories();
-
-    void saveCategory(Kategoria kategoria);
-
-    Kategoria getCategory(int id);
+    List<Category> getCategories();
+    void saveCategory(Category category);
+    Category getCategory(int id);
 }

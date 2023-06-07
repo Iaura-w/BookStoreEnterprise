@@ -1,6 +1,6 @@
 package org.example.dao;
 
-import org.example.entity.Autor;
+import org.example.entity.Author;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -13,27 +13,30 @@ import java.util.stream.Collectors;
 
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
-    @Autowired
     private SessionFactory sessionFactory;
 
+    public AuthorDAOImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
-    public List<Autor> getAuthors() {
+    public List<Author> getAuthors() {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<Autor> query = currentSession.createQuery(" from Autor", Autor.class);
+        Query<Author> query = currentSession.createQuery(" from Author", Author.class);
         return query.getResultList();
     }
 
     @Override
-    public void saveAuthor(Autor autor) {
+    public void saveAuthor(Author author) {
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.save(autor);
+        currentSession.save(author);
     }
 
     @Override
-    public Set<Autor> getAuthorsByIds(List<Integer> authorsIds) {
+    public Set<Author> getAuthorsByIds(List<Integer> authorsIds) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<Autor> query = currentSession.createQuery(" from Autor as a where a.id in (:ids)", Autor.class).setParameterList("ids", authorsIds);
-        Set<Autor> authors = query.getResultStream().collect(Collectors.toSet());
+        Query<Author> query = currentSession.createQuery(" from Author as a where a.id in (:ids)", Author.class).setParameterList("ids", authorsIds);
+        Set<Author> authors = query.getResultStream().collect(Collectors.toSet());
         return authors;
     }
 }

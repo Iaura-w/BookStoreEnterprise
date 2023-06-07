@@ -6,31 +6,36 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>List authors</title>
+    <title>Authors</title>
 </head>
 <body>
-        <h2>Authors:</h2>
+<nav>
+    <div>
+        <a href="${pageContext.request.contextPath}">Home</a>
+    </div>
+</nav>
+<h2>Authors:</h2>
+<div>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Last name</th>
+        </tr>
+        <c:forEach var="author" items="${authors}">
+            <tr>
+                <td>${author.name}</td>
+                <td>${author.lastName}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>
 
-        <div>
-            <table>
-                <tr>
-                    <th>Imie</th>
-                    <th>Nazwisko</th>
-                </tr>
-                <c:forEach var="authors" items="${authors}" >
-                    <tr>
-                        <td>${authors.imie}</td>
-                        <td>${authors.nazwisko}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
-
-        <div>
-            <input type="button" value="Add Author"
-                   onclick="window.location.href='formadd';return false;" />
-        </div>
+<div>
+    <input type="button" value="Add Author"
+           onclick="window.location.href='formadd';return false;"/>
+</div>
 </body>
 </html>

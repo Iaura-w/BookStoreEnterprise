@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.entity.Autor;
+import org.example.entity.Author;
 import org.example.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,21 +21,21 @@ public class AuthorController {
 
     @GetMapping("/list")
     public String listAuthors(Model model) {
-        List<Autor> authors = authorService.getAuthors();
+        List<Author> authors = authorService.getAuthors();
         model.addAttribute("authors", authors);
         return "authorlist";
     }
 
     @GetMapping("/formadd")
     public String addForm(Model model) {
-        Autor author = new Autor();
+        Author author = new Author();
         model.addAttribute("author", author);
         return "addauthorform";
     }
 
     @PostMapping("/addAuthor")
-    public String addAuthor(@ModelAttribute("author") Autor autor) {
-        authorService.saveAuthor(autor);
+    public String addAuthor(@ModelAttribute("author") Author author) {
+        authorService.saveAuthor(author);
         return "redirect:/authors/list";
     }
 }

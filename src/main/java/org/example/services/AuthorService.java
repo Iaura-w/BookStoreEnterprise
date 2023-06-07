@@ -1,14 +1,14 @@
 package org.example.services;
 
-import org.example.entity.Autor;
+import org.example.entity.Author;
 
 import java.util.List;
 import java.util.Set;
 
 public interface AuthorService {
-    List<Autor> getAuthors();
+    List<Author> getAuthors();
 
-    void saveAuthor(Autor autor);
+    void saveAuthor(Author author);
 
-    Set<Autor> getAuthorsByIds(List<Integer> authorsIds);
+    Set<Author> getAuthorsByIds(List<Integer> authorsIds);
 }

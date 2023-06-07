@@ -18,27 +18,26 @@ ADD BOOK
         <tbody>
         <td><form:hidden path="id"/></td>
         <tr>
-            <td><label>nazwa:</label></td>
-            <td><form:input path="nazwa" /></td>
+            <td><label>name:</label></td>
+            <td><form:input path="name"/></td>
         </tr>
 
         <tr>
-            <td><label>wydawnictwo:</label></td>
-            <td><form:input path="wydawnictwo" /></td>
+            <td><label>publisher:</label></td>
+            <td><form:input path="publisher"/></td>
         </tr>
 
         <tr>
-            <td><label>cena:</label></td>
-            <td><form:input path="cena" /></td>
+            <td><label>price:</label></td>
+            <td><form:input path="price"/></td>
         </tr>
         <tr>
-           <!-- <td><label>kategoria:</label></td>-->
-           <!-- <td><form:input path="kategoria" /></td> -->
+            <!-- <td><form:input path="category" /></td> -->
         </tr>
 
         <tr>
             <td><label></label></td>
-            <td><input type="submit" value="Save" class="save" /></td>
+            <td><input type="submit" value="Save" class="save"/></td>
         </tr>
 
         </tbody>
@@ -49,7 +48,7 @@ ADD BOOK
 
 
 <p>
-    <a href="${pageContext.request.contextPath}/books/list "> return  </a>
+    <a href="${pageContext.request.contextPath}/books/list "> return </a>
 </p>
 </body>
 </html>
