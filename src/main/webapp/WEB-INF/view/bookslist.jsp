@@ -13,6 +13,14 @@
     <title>Books</title>
 </head>
 <body>
+<nav>
+    <div>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+    </div>
+</nav>
 <h2>Books:</h2>
 
 <div>
@@ -59,7 +67,7 @@
                     <td>
                         <form:form action="${pageContext.request.contextPath}/cart/add">
                             <input type="hidden" id="bookId" name="bookId" value="${book.id}"/>
-                            <button type="submit">add too cart</button>
+                            <button type="submit">add to cart</button>
                         </form:form>
                     </td>
                 </sec:authorize>
@@ -71,17 +79,6 @@
 <div>
     <input type="button" value="Add Book"
            onclick="window.location.href='formadd2';return false;"/>
-</div>
-<div>
-    <table>
-        <tr>
-            <td><a href="${pageContext.request.contextPath}/authors/list">Authors</a></td>
-            <td><a href="${pageContext.request.contextPath}/categories/list">Categories</a></td>
-            <td><a href="${pageContext.request.contextPath}/cart">Cart</a></td>
-            <td><a href="${pageContext.request.contextPath}/logout">Logout</a></td>
-        </tr>
-    </table>
-
 </div>
 </body>
 </html>

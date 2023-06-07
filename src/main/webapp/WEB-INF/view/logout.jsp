@@ -8,6 +8,11 @@
     <title>Logout</title>
 </head>
 <body>
+<nav>
+    <div>
+        <a href="${pageContext.request.contextPath}">Home</a>
+    </div>
+</nav>
 <h3>Logout</h3>
 <form:form method="post">
     <button type="submit">Logout</button>
