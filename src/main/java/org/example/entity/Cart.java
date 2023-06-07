@@ -9,11 +9,7 @@ import java.util.List;
 @Component
 @SessionScope
 public class Cart {
-    private List<Integer> bookIds = new ArrayList<>();
-
-    public Cart() {
-        bookIds.add(1);
-    }
+    private final List<Integer> bookIds = new ArrayList<>();
 
     public void addBookId(Integer id) {
         bookIds.add(id);

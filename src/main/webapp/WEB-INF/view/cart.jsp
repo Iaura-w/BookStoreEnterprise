@@ -28,6 +28,7 @@
             <th>Publisher</th>
             <th>Price</th>
             <th>Category</th>
+            <th>Delete</th>
         </tr>
         <c:forEach var="book" items="${books}">
             <tr>
@@ -49,7 +50,9 @@
                 </td>
             </tr>
         </c:forEach>
-
+        <tr>
+            <td>Final price: ${finalPrice}</td>
+        </tr>
     </table>
 </div>
 <div>

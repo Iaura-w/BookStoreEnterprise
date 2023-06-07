@@ -23,6 +23,10 @@
             <th>Publisher</th>
             <th>Price</th>
             <th>Category</th>
+            <th></th>
+            <th>Update</th>
+            <th></th>
+            <th>Delete</th>
             <sec:authorize access="hasRole('USER')">
                 <th>Cart</th>
             </sec:authorize>
