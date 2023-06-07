@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserDAO userDAO;
     private final PasswordEncoder passwordEncoder;
 
@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService{
         User user = userDAO.getUser(username);
         return user;
     }
+
     @Transactional
     @Override
     public void saveUser(User user) {

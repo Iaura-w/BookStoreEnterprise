@@ -10,7 +10,11 @@ import org.example.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -47,7 +51,7 @@ public class BookController {
         model.addAttribute("bookDTO", bookDTO);
         List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
-        List<Author> authors =  authorService.getAuthors();
+        List<Author> authors = authorService.getAuthors();
         model.addAttribute("authors", authors);
         return "addbookform2";
     }
@@ -95,7 +99,7 @@ public class BookController {
         List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
 
-        List<Author> authors =  authorService.getAuthors();
+        List<Author> authors = authorService.getAuthors();
         model.addAttribute("authors", authors);
 
         return "addbookform2";
@@ -107,8 +111,9 @@ public class BookController {
         model.addAttribute("book", book);
         return "deletebookform";
     }
+
     @PostMapping("/deleteBook")
-    public String deleteBook(@ModelAttribute("book") Book book){
+    public String deleteBook(@ModelAttribute("book") Book book) {
         bookService.deleteBook(book);
         return "redirect:/books/list";
     }

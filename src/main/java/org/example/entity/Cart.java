@@ -18,9 +18,11 @@ public class Cart {
     public void addBookId(Integer id) {
         bookIds.add(id);
     }
+
     public void deleteBookId(Integer id) {
         bookIds.remove(id);
     }
+
     public List<Integer> getBookIds() {
         return bookIds;
     }

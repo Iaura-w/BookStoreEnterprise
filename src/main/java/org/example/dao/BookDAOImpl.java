@@ -48,7 +48,7 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public List<Book> getBooksByIds(List<Integer> bookIds) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Query<Book> query = currentSession.createQuery("select distinct b from Book b " +   "left join fetch b.authors where b.id in (:ids)", Book.class).setParameterList("ids", bookIds);
+        Query<Book> query = currentSession.createQuery("select distinct b from Book b " + "left join fetch b.authors where b.id in (:ids)", Book.class).setParameterList("ids", bookIds);
         return query.getResultList();
     }
 }
