@@ -35,4 +35,10 @@ public class CategoryDAOImpl implements CategoryDAO {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Category.class, id);
     }
+
+    @Override
+    public void deleteCategory(Category category) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(category);
+    }
 }

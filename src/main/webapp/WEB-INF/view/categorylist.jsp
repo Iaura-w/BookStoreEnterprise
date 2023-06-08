@@ -16,10 +16,21 @@
     <table>
         <tr>
             <th>Name</th>
+            <sec:authorize access="hasRole('ADMIN')">
+                <th></th>
+                <th>Delete</th>
+            </sec:authorize>
         </tr>
         <c:forEach var="category" items="${categories}">
             <tr>
                 <td>${category.name}</td>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <td>
+                        <c:url var="delete" value="/categories/deleteCategory">
+                            <c:param name="categoryId" value="${category.id}"/></c:url>
+                    </td>
+                    <td><a href="${delete}">delete</a></td>
+                </sec:authorize>
             </tr>
         </c:forEach>
     </table>

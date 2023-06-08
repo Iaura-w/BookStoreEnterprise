@@ -85,8 +85,12 @@ http://www.springframework.org/schema/security/spring-security.xsd"
         <sec:intercept-url pattern="/orders/complete" access="hasAuthority('ROLE_ADMIN')"/>
         <sec:intercept-url pattern="/authors/list" access="permitAll()"/>
         <sec:intercept-url pattern="/authors/addAuthor" access="hasAuthority('ROLE_ADMIN')"/>
+        <sec:intercept-url pattern="/authors/deleteAuthor" access="hasAuthority('ROLE_ADMIN')"/>
+        <sec:intercept-url pattern="/authors/formadd" access="hasAuthority('ROLE_ADMIN')"/>
         <sec:intercept-url pattern="/categories/list" access="permitAll()"/>
         <sec:intercept-url pattern="/categories/addCategory" access="hasAuthority('ROLE_ADMIN')"/>
+        <sec:intercept-url pattern="/categories/deleteCategory" access="hasAuthority('ROLE_ADMIN')"/>
+        <sec:intercept-url pattern="/categories/formadd" access="hasAuthority('ROLE_ADMIN')"/>
         <sec:intercept-url pattern="/books/list" access="permitAll()"/>
         <sec:intercept-url pattern="/books/admin" access="hasAuthority('ROLE_ADMIN')"/>
         <sec:intercept-url pattern="/books/saveBook" access="hasAuthority('ROLE_ADMIN')"/>
