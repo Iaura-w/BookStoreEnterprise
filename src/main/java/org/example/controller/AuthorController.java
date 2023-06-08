@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,6 +37,19 @@ public class AuthorController {
     @PostMapping("/addAuthor")
     public String addAuthor(@ModelAttribute("author") Author author) {
         authorService.saveAuthor(author);
+        return "redirect:/authors/list";
+    }
+
+    @GetMapping("/deleteAuthor")
+    public String deleteAuthorForm(@RequestParam("authorId") int id, Model model) {
+        Author author = authorService.getAuthor(id);
+        model.addAttribute("author", author);
+        return "deleteauthorform";
+    }
+
+    @PostMapping("/deleteAuthor")
+    public String deleteAuthor(@ModelAttribute("author") Author author) {
+        authorService.deleteAuthor(author);
         return "redirect:/authors/list";
     }
 }

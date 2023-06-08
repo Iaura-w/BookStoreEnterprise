@@ -38,4 +38,16 @@ public class AuthorDAOImpl implements AuthorDAO {
         Set<Author> authors = query.getResultStream().collect(Collectors.toSet());
         return authors;
     }
+
+    @Override
+    public Author getAuthor(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Author.class, id);
+    }
+
+    @Override
+    public void deleteAuthor(Author author) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(author);
+    }
 }

@@ -11,4 +11,8 @@ public interface AuthorService {
     void saveAuthor(Author author);
 
     Set<Author> getAuthorsByIds(List<Integer> authorsIds);
+
+    void deleteAuthor(Author author);
+
+    Author getAuthor(int id);
 }

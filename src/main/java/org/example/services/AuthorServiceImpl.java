@@ -31,4 +31,16 @@ public class AuthorServiceImpl implements AuthorService {
     public Set<Author> getAuthorsByIds(List<Integer> authorsIds) {
         return authorDAO.getAuthorsByIds(authorsIds);
     }
+
+    @Override
+    @Transactional
+    public void deleteAuthor(Author author) {
+        authorDAO.deleteAuthor(author);
+    }
+
+    @Override
+    @Transactional
+    public Author getAuthor(int id) {
+        return authorDAO.getAuthor(id);
+    }
 }
