@@ -7,6 +7,7 @@ import org.example.entity.User;
 import org.example.services.BookService;
 import org.example.services.OrderService;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,13 +36,20 @@ public class OrderController {
     public String listUserOrders(Authentication authentication, Model model) {
         String username = authentication.getName();
         List<Order> orders = orderService.getOrders();
-
-        if (authentication.getAuthorities().contains("ROLE_USER")) {
+        if (hasRoleUser(authentication)) {
             orders = orderService.getOrders(username);
         }
         model.addAttribute("orders", orders);
         model.addAttribute("dateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         return "orders";
+    }
+
+    private static boolean hasRoleUser(Authentication authentication) {
+        for (GrantedAuthority auth : authentication.getAuthorities()) {
+            if ("ROLE_USER".equals(auth.getAuthority()))
+                return true;
+        }
+        return false;
     }
 
     @PostMapping

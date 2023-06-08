@@ -26,7 +26,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getOrders(String username) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Order> query = session.createQuery("SELECT o from Order o WHERE o.user.username=:username", Order.class);
+        Query<Order> query = session.createQuery("SELECT o from Order o WHERE o.user.username=:username", Order.class).setParameter("username", username);
         return query.getResultList();
     }
 
