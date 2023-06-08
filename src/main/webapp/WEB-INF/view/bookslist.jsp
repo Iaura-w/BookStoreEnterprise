@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: luke
-  Date: 15.05.2019
-  Time: 00:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -55,7 +48,7 @@
                 <td>${book.category.name}</td>
                 <sec:authorize access="hasRole('ADMIN')">
                     <td>
-                        <c:url var="update" value="/books/updateBookForm2">
+                        <c:url var="update" value="/books/updateBookForm">
                             <c:param name="bookId" value="${book.id}"/></c:url>
                     </td>
                     <td><a href="${update}">update</a></td>
@@ -83,7 +76,7 @@
 <sec:authorize access="hasRole('ADMIN')">
     <div>
         <input type="button" value="Add Book"
-               onclick="window.location.href='formadd2';return false;"/>
+               onclick="window.location.href='formadd';return false;"/>
     </div>
 </sec:authorize>
 

@@ -13,7 +13,7 @@
         <a href="${pageContext.request.contextPath}">Home</a>
     </div>
 </nav>
-<h3>Logout</h3>
+<p>Do you want to log out?</p>
 <form:form method="post">
     <button type="submit">Logout</button>
 </form:form>

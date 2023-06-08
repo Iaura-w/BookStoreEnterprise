@@ -38,7 +38,14 @@
                     <td>
                         <form:form action="${pageContext.request.contextPath}/orders/complete">
                             <input type="hidden" id="orderId" name="orderId" value="${order.id}"/>
-                            <button type="submit">COMPLETE</button>
+                            <c:choose>
+                                <c:when test='${order.status.equals("COMPLETED")}'>
+                                    <button disabled type="submit">COMPLETE</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="submit">COMPLETE</button>
+                                </c:otherwise>
+                            </c:choose>
                         </form:form>
                     </td>
                 </sec:authorize>

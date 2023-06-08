@@ -40,34 +40,17 @@ public class BookController {
 
     @GetMapping("/formadd")
     public String addForm(Model model) {
-        Book book = new Book();
-        model.addAttribute("book", book);
-        return "addbookform";
-    }
-
-    @GetMapping("/formadd2")
-    public String addForm2(Model model) {
         BookDTO bookDTO = new BookDTO();
         model.addAttribute("bookDTO", bookDTO);
         List<Category> categories = categoryService.getCategories();
         model.addAttribute("categories", categories);
         List<Author> authors = authorService.getAuthors();
         model.addAttribute("authors", authors);
-        return "addbookform2";
+        return "addbookform";
     }
 
     @PostMapping("/saveBook")
-    public String saveBook(@ModelAttribute("book") Book book) {
-        bookService.saveBook(book);
-        return "redirect:/books/list";
-    }
-
-    @PostMapping("/saveBook2")
-    public String saveBook2(@ModelAttribute("bookDTO") BookDTO bookDTO) {
-//        Book book = bookService.getBook(bookDTO.getId());
-//        if (book == null) {
-//            book = new Book();
-//        }
+    public String saveBook(@ModelAttribute("bookDTO") BookDTO bookDTO) {
         Book book = new Book();
         book.setId(bookDTO.getId());
         book.setName(bookDTO.getName());
@@ -82,8 +65,8 @@ public class BookController {
         return "redirect:/books/list";
     }
 
-    @GetMapping("/updateBookForm2")
-    public String updateBookForm2(@RequestParam("bookId") int id, Model model) {
+    @GetMapping("/updateBookForm")
+    public String updateBookForm(@RequestParam("bookId") int id, Model model) {
         Book book = bookService.getBook(id);
         BookDTO bookDTO = new BookDTO();
         if (book != null) {
@@ -102,7 +85,7 @@ public class BookController {
         List<Author> authors = authorService.getAuthors();
         model.addAttribute("authors", authors);
 
-        return "addbookform2";
+        return "addbookform";
     }
 
     @GetMapping("/deleteBook")

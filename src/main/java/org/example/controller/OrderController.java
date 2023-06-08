@@ -43,12 +43,6 @@ public class OrderController {
         model.addAttribute("dateFormat", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         return "orders";
     }
-//    @GetMapping
-//    public String listAllOrders(Model model) {
-//        List<Order> orders = orderService.getOrders();
-//        model.addAttribute("orders", orders);
-//        return "orders";
-//    }
 
     @PostMapping
     public String saveOrder(Authentication authentication) {

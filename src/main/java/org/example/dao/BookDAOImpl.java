@@ -17,9 +17,7 @@ public class BookDAOImpl implements BookDAO {
 
     @Override
     public List<Book> getBooks() {
-        //sesja hibertabe
         Session currentSession = sessionFactory.getCurrentSession();
-        //zapytanie
         Query<Book> query = currentSession.createQuery("SELECT DISTINCT k from Book k LEFT JOIN FETCH k.authors", Book.class);
         List<Book> books = query.getResultList();
 
@@ -29,7 +27,6 @@ public class BookDAOImpl implements BookDAO {
     @Override
     public void saveBook(Book book) {
         Session session = sessionFactory.getCurrentSession();
-        // book.setCategory();
         session.saveOrUpdate(book);
     }
 

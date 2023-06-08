@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: luke
-  Date: 15.05.2019
-  Time: 00:05
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -66,8 +59,6 @@
             </c:otherwise>
         </c:choose>
     </form:form>
-    <%--    <input type="button" value="Order"--%>
-    <%--           onclick="window.location.href='order';return false;"/>--%>
 </div>
 </body>
 </html>
