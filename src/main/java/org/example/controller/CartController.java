@@ -28,7 +28,7 @@ public class CartController {
     public String cart(Model model) {
         List<Integer> cartBookIds = cart.getBookIds();
         if (cartBookIds.size() > 0) {
-            List<Book> books = bookService.getBooksByIds(cartBookIds);
+            List<Book> books = bookService.getBooks(cartBookIds);
             float finalPrice = books.stream().map(book -> book.getPrice()).reduce(0.0f, (a, b) -> a + b);
             model.addAttribute("books", books);
             model.addAttribute("finalPrice", finalPrice);

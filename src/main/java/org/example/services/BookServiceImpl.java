@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public List<Book> getBooksByIds(List<Integer> bookIds) {
+    public List<Book> getBooks(List<Integer> bookIds) {
         return bookDAO.getBooksByIds(bookIds);
     }
 }

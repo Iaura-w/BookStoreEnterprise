@@ -18,6 +18,7 @@
         <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
         <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
         <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
         <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </div>
 </nav>
@@ -31,10 +32,12 @@
             <th>Publisher</th>
             <th>Price</th>
             <th>Category</th>
-            <th></th>
-            <th>Update</th>
-            <th></th>
-            <th>Delete</th>
+            <sec:authorize access="hasRole('ADMIN')">
+                <th></th>
+                <th>Update</th>
+                <th></th>
+                <th>Delete</th>
+            </sec:authorize>
             <sec:authorize access="hasRole('USER')">
                 <th>Cart</th>
             </sec:authorize>
@@ -50,18 +53,19 @@
                 <td>${book.publisher}</td>
                 <td>${book.price}</td>
                 <td>${book.category.name}</td>
-                <td>
-                    <c:url var="update" value="/books/updateBookForm2">
-                        <c:param name="bookId" value="${book.id}"/></c:url>
-                </td>
-                <td><a href="${update}">update</a></td>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <td>
+                        <c:url var="update" value="/books/updateBookForm2">
+                            <c:param name="bookId" value="${book.id}"/></c:url>
+                    </td>
+                    <td><a href="${update}">update</a></td>
 
-                <td>
-                    <c:url var="delete" value="/books/deleteBook">
-                        <c:param name="bookId" value="${book.id}"/></c:url>
-                </td>
-                <td><a href="${delete}">delete</a></td>
-
+                    <td>
+                        <c:url var="delete" value="/books/deleteBook">
+                            <c:param name="bookId" value="${book.id}"/></c:url>
+                    </td>
+                    <td><a href="${delete}">delete</a></td>
+                </sec:authorize>
 
                 <sec:authorize access="hasRole('USER')">
                     <td>
@@ -76,9 +80,12 @@
 
     </table>
 </div>
-<div>
-    <input type="button" value="Add Book"
-           onclick="window.location.href='formadd2';return false;"/>
-</div>
+<sec:authorize access="hasRole('ADMIN')">
+    <div>
+        <input type="button" value="Add Book"
+               onclick="window.location.href='formadd2';return false;"/>
+    </div>
+</sec:authorize>
+
 </body>
 </html>

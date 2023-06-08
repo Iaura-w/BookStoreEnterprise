@@ -8,6 +8,9 @@ repositories {
     mavenCentral()
 }
 
+war {
+    archiveFileName = 'bookStore.war'
+}
 
 dependencies {
     dependencies {

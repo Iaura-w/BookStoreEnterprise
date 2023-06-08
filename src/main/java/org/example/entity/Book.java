@@ -55,6 +55,14 @@ public class Book {
     )
     private Set<Author> authors;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "zamowienia_to_ksiazki",
+            joinColumns = @JoinColumn(name = "ksiazka_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id")
+    )
+    private List<Order> orders;
+
     public int getId() {
         return id;
     }
@@ -117,6 +125,15 @@ public class Book {
 
     public void setAuthors(Set<Author> autorzy) {
         this.authors = autorzy;
+    }
+
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

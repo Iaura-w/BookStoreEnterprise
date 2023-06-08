@@ -32,7 +32,7 @@ public class BookController {
     private AuthorService authorService;
 
     @GetMapping("/list")
-    public String listCustomers(Model model) {
+    public String listBooks(Model model) {
         List<Book> books = bookService.getBooks();
         model.addAttribute("books", books);
         return "bookslist";

@@ -56,8 +56,18 @@
     </table>
 </div>
 <div>
-    <input type="button" value="Order"
-           onclick="window.location.href='order';return false;"/>
+    <form:form action="${pageContext.request.contextPath}/orders" method="post">
+        <c:choose>
+            <c:when test="${finalPrice<=(0.0)}">
+                <button disabled type="submit">order</button>
+            </c:when>
+            <c:otherwise>
+                <button type="submit">order</button>
+            </c:otherwise>
+        </c:choose>
+    </form:form>
+    <%--    <input type="button" value="Order"--%>
+    <%--           onclick="window.location.href='order';return false;"/>--%>
 </div>
 </body>
 </html>
