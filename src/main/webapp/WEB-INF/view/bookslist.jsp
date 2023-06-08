@@ -4,13 +4,17 @@
 <html>
 <head>
     <title>Books</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
 <nav>
     <div>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
         <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
         <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
-        <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
         <a href="${pageContext.request.contextPath}/orders">Orders</a>
         <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </div>
@@ -51,13 +55,17 @@
                         <c:url var="update" value="/books/updateBookForm">
                             <c:param name="bookId" value="${book.id}"/></c:url>
                     </td>
-                    <td><a href="${update}">update</a></td>
+                    <td>
+                        <button onclick="location.href='${update}'">UPDATE</button>
+                    </td>
 
                     <td>
                         <c:url var="delete" value="/books/deleteBook">
                             <c:param name="bookId" value="${book.id}"/></c:url>
                     </td>
-                    <td><a href="${delete}">delete</a></td>
+                    <td>
+                        <button onclick="location.href='${delete}'">DELETE</button>
+                    </td>
                 </sec:authorize>
 
                 <sec:authorize access="hasRole('USER')">

@@ -6,13 +6,9 @@
 <head>
     <meta charset="utf-8">
     <title>Register</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/login.css">
 </head>
 <body>
-<nav>
-    <div>
-        <a href="${pageContext.request.contextPath}">Home</a>
-    </div>
-</nav>
 <h3>Register</h3>
 <c:if test="${not empty validator}"><p><c:out value="${validator}"/></p></c:if>
 <form:form method="post" modelAttribute="user">
@@ -34,5 +30,8 @@
         </tbody>
     </table>
 </form:form>
+<div>
+    <a href="${pageContext.request.contextPath}/login">Login</a>
+</div>
 </body>
 </html>

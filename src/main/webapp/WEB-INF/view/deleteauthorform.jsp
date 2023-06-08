@@ -2,9 +2,22 @@
 <html>
 <head>
     <title>Authors</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
-DELETE AUTHOR
+<nav>
+    <div>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+    </div>
+</nav>
+<h2>DELETE AUTHOR</h2>
 <form:form action="deleteAuthor" modelAttribute="author" method="POST">
 
     <div>
@@ -30,7 +43,7 @@ DELETE AUTHOR
 
 
 <p>
-    <a href="${pageContext.request.contextPath}/authors/list "> return </a>
+    <button onclick="location.href='${pageContext.request.contextPath}/authors/list'">Return</button>
 </p>
 </body>
 </html>

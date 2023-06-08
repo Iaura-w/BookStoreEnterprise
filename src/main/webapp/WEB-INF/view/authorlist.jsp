@@ -4,11 +4,19 @@
 <html>
 <head>
     <title>Authors</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
 <nav>
     <div>
-        <a href="${pageContext.request.contextPath}">Home</a>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </div>
 </nav>
 <h2>Authors:</h2>
@@ -31,7 +39,9 @@
                         <c:url var="delete" value="/authors/deleteAuthor">
                             <c:param name="authorId" value="${author.id}"/></c:url>
                     </td>
-                    <td><a href="${delete}">delete</a></td>
+                    <td>
+                        <button onclick="location.href='${delete}'">DELETE</button>
+                    </td>
                 </sec:authorize>
             </tr>
         </c:forEach>

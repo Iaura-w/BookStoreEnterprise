@@ -4,13 +4,20 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="utf-8">
     <title>Logout</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
 <nav>
     <div>
-        <a href="${pageContext.request.contextPath}">Home</a>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </div>
 </nav>
 <p>Do you want to log out?</p>

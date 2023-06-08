@@ -1,10 +1,24 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Books</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
-ADD BOOK
+<nav>
+    <div>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+    </div>
+</nav>
+<h2>ADD BOOK</h2>
 <form:form action="saveBook" modelAttribute="bookDTO" method="POST">
 
     <td><form:hidden path="id"/></td>
@@ -51,7 +65,7 @@ ADD BOOK
 
 
 <p>
-    <a href="${pageContext.request.contextPath}/books/list "> return </a>
+    <button onclick="location.href='${pageContext.request.contextPath}/books/list'">Return</button>
 </p>
 </body>
 </html>

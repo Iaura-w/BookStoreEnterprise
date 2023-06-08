@@ -1,10 +1,24 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Categories</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
-ADD CATEGORY
+<nav>
+    <div>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
+    </div>
+</nav>
+<h2>ADD CATEGORY</h2>
 <form:form action="addCategory" modelAttribute="category" method="POST">
 
     <table>
@@ -28,7 +42,7 @@ ADD CATEGORY
 
 
 <p>
-    <a href="${pageContext.request.contextPath}/categories/list "> return </a>
+    <button onclick="location.href='${pageContext.request.contextPath}/categories/list'">Return</button>
 </p>
 </body>
 </html>

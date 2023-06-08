@@ -3,11 +3,19 @@
 <html>
 <head>
     <title>Categories</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
 <nav>
     <div>
-        <a href="${pageContext.request.contextPath}">Home</a>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </div>
 </nav>
 <h2>Categories:</h2>
@@ -29,7 +37,9 @@
                         <c:url var="delete" value="/categories/deleteCategory">
                             <c:param name="categoryId" value="${category.id}"/></c:url>
                     </td>
-                    <td><a href="${delete}">delete</a></td>
+                    <td>
+                        <button onclick="location.href='${delete}'">DELETE</button>
+                    </td>
                 </sec:authorize>
             </tr>
         </c:forEach>

@@ -103,6 +103,7 @@ http://www.springframework.org/schema/security/spring-security.xsd"
         <sec:intercept-url pattern="/restdeleteBookForm" access="permitAll()"/>
         <sec:intercept-url pattern="/restsaveBook" access="hasAuthority('ROLE_ADMIN')"/>
         <!-- <sec:intercept-url pattern="/books/admin" access="hasRole('ROLE_ADMIN')"/> -->
+        <sec:intercept-url pattern="/resources/**" access="permitAll()"/>
         <sec:intercept-url pattern="/**" access="hasAuthority('ROLE_ADMIN')"/>
         <sec:form-login login-page="/login"/>
         <sec:logout logout-success-url="/"/>

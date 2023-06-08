@@ -5,11 +5,19 @@
 <html>
 <head>
     <title>Orders</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
 <nav>
     <div>
-        <a href="${pageContext.request.contextPath}">Home</a>
+        <a href="${pageContext.request.contextPath}/books/list">Books</a>
+        <a href="${pageContext.request.contextPath}/authors/list">Authors</a>
+        <a href="${pageContext.request.contextPath}/categories/list">Categories</a>
+        <sec:authorize access="hasRole('USER')">
+            <a href="${pageContext.request.contextPath}/cart">Cart</a>
+        </sec:authorize>
+        <a href="${pageContext.request.contextPath}/orders">Orders</a>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </div>
 </nav>
 <h2>Orders:</h2>
@@ -29,7 +37,7 @@
             <tr>
                 <td>${dateFormat.format(order.dateTime)}</td>
                 <td>
-                    <c:forEach var="book" items="${order.books}">${book.name}  </c:forEach>
+                    <c:forEach var="book" items="${order.books}">${book.name}, </c:forEach>
                 </td>
                 <td>${order.price}</td>
                 <td>${order.status}</td>
@@ -54,7 +62,7 @@
     </table>
 </div>
 <p>
-    <a href="${pageContext.request.contextPath}/books/list "> return </a>
+    <button onclick="location.href='${pageContext.request.contextPath}/books/list'">Return</button>
 </p>
 </body>
 </html>
