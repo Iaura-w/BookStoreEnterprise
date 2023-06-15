@@ -22,7 +22,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/orders")
@@ -30,11 +32,13 @@ public class OrderController {
     private final OrderService orderService;
     private final BookService bookService;
     private final Cart cart;
+    private Map<Integer, String> ordersIdsMap;
 
     public OrderController(OrderService orderService, BookService bookService, Cart cart) {
         this.orderService = orderService;
         this.bookService = bookService;
         this.cart = cart;
+        ordersIdsMap = new HashMap<>();
     }
 
 
@@ -70,15 +74,17 @@ public class OrderController {
         orderService.saveOrder(order);
         cart.getBookIds().clear();
 
-        String redirectUri = sendRequestPayU(order);
+        PayuResponse payuResponse = sendRequestPayU(order);
+        ordersIdsMap.put(payuResponse.getOrderIdDb(),payuResponse.getOrderId());
         model.addAttribute("order", order);
-        model.addAttribute("redirectUri", redirectUri);
+        model.addAttribute("redirectUri", payuResponse.redirectUri);
 //        return "redirect:/orders";
         return "payu";
     }
 
     @PostMapping("/complete")
     public String completeOrder(@RequestParam(name = "orderId") int id) {
+        String payuOrderId = ordersIdsMap.get(id);
         orderService.completeOrder(id);
         return "redirect:/orders";
     }
@@ -99,14 +105,16 @@ public class OrderController {
 ////        return httpServletResponse.toString();
 //    }
 
-    public String sendRequestPayU(Order order) {
+    public PayuResponse sendRequestPayU(Order order) {
         try {
             URL url = new URL("https://secure.snd.payu.com/api/v2_1/orders");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setInstanceFollowRedirects(false);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Authorization", "Bearer d9a4536e-62ba-4f60-8017-6053211d3f47");
+            String tokenFromPayu = getTokenFromPayu();
+//            String token = "d9a4536e-62ba-4f60-8017-6053211d3f47";
+            connection.setRequestProperty("Authorization", "Bearer " + tokenFromPayu);
             connection.setDoOutput(true);
 
             String jsonInput = createJsonOrder(order);
@@ -118,6 +126,8 @@ public class OrderController {
             int responseCode = connection.getResponseCode();
             String responseMessage = connection.getResponseMessage();
 
+            System.out.println("JSON:");
+            System.out.println(jsonInput);
             System.out.println("response code: " + responseCode);
             System.out.println("response message: " + responseMessage);
             if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_MOVED_TEMP) {
@@ -131,8 +141,51 @@ public class OrderController {
 
                 System.out.println(response);
                 String redirectUri = extractFromJson(response.toString(), "\"redirectUri\":\"");
-                return redirectUri;
+                String payuOrderId = extractFromJson(response.toString(), "\"orderId\":\"");
+                String orderIdDb = extractFromJson(response.toString(), "\"extOrderId\":\"");
+                return new PayuResponse(redirectUri, payuOrderId, Integer.parseInt(orderIdDb));
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return new PayuResponse();
+    }
+
+    public String getTokenFromPayu() {
+        try {
+            URL url = new URL("https://secure.snd.payu.com/pl/standard/user/oauth/authorize");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setInstanceFollowRedirects(false);
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            connection.setDoOutput(true);
+
+            String parameters = "grant_type=client_credentials&client_id=460718&client_secret=22f4175da9f0f72bcce976dd8bd7504f";
+
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = parameters.getBytes("utf-8");
+                os.write(input, 0, input.length);
+                os.flush();
+            }
+
+            int responseCode = connection.getResponseCode();
+            String responseMessage = connection.getResponseMessage();
+
+
+            System.out.println("response code: " + responseCode);
+            System.out.println("response message: " + responseMessage);
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            System.out.println(response);
+            String token = extractFromJson(response.toString(), "\"access_token\":\"");
+            return token;
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -153,13 +206,14 @@ public class OrderController {
     private static String createJsonOrder(Order order) {
         StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("{");
-        jsonBuilder.append("\"notifyUrl\": \"").append("http://localhost:8080/bookStore/orders/notify").append("\",");
+        jsonBuilder.append("\"notifyUrl\": \"").append("http://localhost:8080/bookStore/orders/notify").append("/").append(order.getId()).append("\",");
         jsonBuilder.append("\"continueUrl\": \"").append("http://localhost:8080/bookStore/orders/continue").append("/").append(order.getId()).append("\",");
         jsonBuilder.append("\"customerIp\": \"").append("127.0.0.1").append("\",");
-        jsonBuilder.append("\"merchantPosId\": \"").append("300746").append("\",");
+        jsonBuilder.append("\"merchantPosId\": \"").append("467079").append("\",");
         jsonBuilder.append("\"description\": \"").append("books").append("\",");
         jsonBuilder.append("\"currencyCode\": \"").append("PLN").append("\",");
         jsonBuilder.append("\"totalAmount\": ").append((int) (order.getPrice() * 100)).append(",");
+        jsonBuilder.append("\"extOrderId\": \"").append(order.getId()).append("\",");
 
         jsonBuilder.append("\"buyer\": {");
         jsonBuilder.append("\"email\": \"").append(order.getUser().getUsername()).append("@example.com").append("\",");
@@ -185,5 +239,32 @@ public class OrderController {
         jsonBuilder.append("}");
 
         return jsonBuilder.toString();
+    }
+
+    private class PayuResponse {
+        private String redirectUri;
+        private String orderId;
+        private int orderIdDb;
+
+        public PayuResponse() {
+        }
+
+        public PayuResponse(String redirectUri, String orderId, int orderIdDb) {
+            this.redirectUri = redirectUri;
+            this.orderId = orderId;
+            this.orderIdDb = orderIdDb;
+        }
+
+        public String getRedirectUri() {
+            return redirectUri;
+        }
+
+        public String getOrderId() {
+            return orderId;
+        }
+
+        public int getOrderIdDb() {
+            return orderIdDb;
+        }
     }
 }
