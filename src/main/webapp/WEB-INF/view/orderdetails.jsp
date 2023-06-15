@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>PayU</title>
+    <title>Order details</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
@@ -22,25 +22,10 @@
 </nav>
 <h2>Order details:</h2>
 <div>
-    <table>
-        <tr>
-            <th>Books</th>
-            <th>Price</th>
-            <th>Status</th>
-        </tr>
-        <tr>
-            <td>
-                <c:forEach var="book" items="${order.books}">${book.name}, </c:forEach>
-            </td>
-            <td>${order.price}</td>
-            <td>${order.status}</td>
-        </tr>
-    </table>
-</div>
-<div>
-    <form:form action="${redirectUri}">
-        <button type="submit">PayU</button>
-    </form:form>
+    <p>Order was successfully paid.</p>
+    <p>
+        <button onclick="location.href='${pageContext.request.contextPath}/orders'">orders</button>
+    </p>
 </div>
 
 </body>

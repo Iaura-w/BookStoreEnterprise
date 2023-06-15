@@ -38,4 +38,10 @@ public class OrderServiceImpl implements OrderService {
     public void completeOrder(int orderId) {
         orderDAO.completeOrder(orderId);
     }
+
+    @Override
+    @Transactional
+    public void paidOrder(int orderId) {
+        orderDAO.paidOrder(orderId);
+    }
 }

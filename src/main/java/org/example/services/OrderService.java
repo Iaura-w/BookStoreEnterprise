@@ -12,4 +12,6 @@ public interface OrderService {
     void saveOrder(Order order);
 
     void completeOrder(int orderId);
+
+    void paidOrder(int orderId);
 }
