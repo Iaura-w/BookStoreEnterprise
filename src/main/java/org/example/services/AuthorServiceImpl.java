@@ -2,7 +2,6 @@ package org.example.services;
 
 import org.example.dao.AuthorDAO;
 import org.example.entity.Author;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,8 +10,11 @@ import java.util.Set;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
-    @Autowired
-    private AuthorDAO authorDAO;
+    private final AuthorDAO authorDAO;
+
+    public AuthorServiceImpl(AuthorDAO authorDAO) {
+        this.authorDAO = authorDAO;
+    }
 
     @Override
     @Transactional

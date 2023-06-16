@@ -2,7 +2,6 @@ package org.example.controller;
 
 import org.example.entity.Author;
 import org.example.services.AuthorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +16,11 @@ import java.util.List;
 @RequestMapping("/authors")
 public class AuthorController {
 
-    @Autowired
-    AuthorService authorService;
+    private final AuthorService authorService;
+
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @GetMapping("/list")
     public String listAuthors(Model model) {

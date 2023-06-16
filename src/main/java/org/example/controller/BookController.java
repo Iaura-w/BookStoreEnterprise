@@ -8,7 +8,6 @@ import org.example.services.AuthorService;
 import org.example.services.BookService;
 import org.example.services.CategoryService;
 import org.example.services.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +22,20 @@ import java.util.List;
 @RequestMapping("/books")
 public class BookController {
 
-    @Autowired
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
-    @Autowired
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public BookController(BookService bookService, CategoryService categoryService, AuthorService authorService, OrderService orderService) {
+        this.bookService = bookService;
+        this.categoryService = categoryService;
+        this.authorService = authorService;
+        this.orderService = orderService;
+    }
 
     @GetMapping("/list")
     public String listBooks(Model model) {

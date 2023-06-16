@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -43,21 +42,6 @@ public class Author {
 
     )
     private Set<Book> books;
-
-    public void addBook(Book book) {
-        if (books == null) {
-            books = new HashSet<>();
-        }
-        //book.addAutor(this);
-        books.add(book);
-    }
-
-    public void removeBook(Book book) {
-        if (books == null)
-            return;
-        //autor.addBook(this);
-        books.remove(book);
-    }
 
     public int getId() {
         return id;

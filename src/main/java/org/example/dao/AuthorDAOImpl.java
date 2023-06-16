@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class AuthorDAOImpl implements AuthorDAO {
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public AuthorDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
