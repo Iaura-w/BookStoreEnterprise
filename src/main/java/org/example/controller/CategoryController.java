@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -39,19 +38,6 @@ public class CategoryController {
     @PostMapping("/addCategory")
     public String addCategory(@ModelAttribute("category") Category category) {
         categoryService.addCategory(category);
-        return "redirect:/categories/list";
-    }
-
-    @GetMapping("/deleteCategory")
-    public String deleteCategoryForm(@RequestParam("categoryId") int id, Model model) {
-        Category category = categoryService.getCategory(id);
-        model.addAttribute("category", category);
-        return "deletecategoryform";
-    }
-
-    @PostMapping("/deleteCategory")
-    public String deleteCategory(@ModelAttribute("category") Category category) {
-        categoryService.deleteCategory(category);
         return "redirect:/categories/list";
     }
 }

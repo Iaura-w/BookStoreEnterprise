@@ -10,6 +10,4 @@ public interface CategoryDAO {
     void saveCategory(Category category);
 
     Category getCategory(int id);
-
-    void deleteCategory(Category category);
 }
