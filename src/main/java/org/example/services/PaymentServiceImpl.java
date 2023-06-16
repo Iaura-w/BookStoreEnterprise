@@ -132,7 +132,6 @@ public class PaymentServiceImpl implements PaymentService {
     private static String createJsonOrder(Order order) {
         StringBuilder jsonBuilder = new StringBuilder();
         jsonBuilder.append("{");
-//        jsonBuilder.append("\"notifyUrl\": \"").append("http://localhost:8080/bookStore/orders/notify").append("/").append(order.getId()).append("\",");
         jsonBuilder.append("\"continueUrl\": \"").append("http://localhost:8080/bookStore/orders/continue").append("/").append(order.getId()).append("\",");
         jsonBuilder.append("\"customerIp\": \"").append("127.0.0.1").append("\",");
         jsonBuilder.append("\"merchantPosId\": \"").append("467079").append("\",");
