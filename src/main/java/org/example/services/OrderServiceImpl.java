@@ -59,4 +59,10 @@ public class OrderServiceImpl implements OrderService {
         }
         return false;
     }
+
+    @Override
+    @Transactional
+    public void cancelOrder(int orderId) {
+        orderDAO.cancelOrder(orderId);
+    }
 }

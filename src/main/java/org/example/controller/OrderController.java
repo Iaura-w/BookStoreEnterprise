@@ -87,6 +87,12 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    @PostMapping("/cancel")
+    public String cancelOrder(@RequestParam(name = "orderId") int id) {
+        orderService.cancelOrder(id);
+        return "redirect:/orders";
+    }
+
     @GetMapping("/continue/{orderId}")
     public String payuContinue(@PathVariable int orderId, Model model) {
         String orderIdPayu = ordersIdsMap.get(orderId);

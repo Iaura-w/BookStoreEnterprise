@@ -51,4 +51,12 @@ public class OrderDAOImpl implements OrderDAO {
         order.setStatus("PAID");
         session.saveOrUpdate(order);
     }
+
+    @Override
+    public void cancelOrder(int orderId) {
+        Session session = sessionFactory.getCurrentSession();
+        Order order = session.get(Order.class, orderId);
+        order.setStatus("CANCELED");
+        session.saveOrUpdate(order);
+    }
 }

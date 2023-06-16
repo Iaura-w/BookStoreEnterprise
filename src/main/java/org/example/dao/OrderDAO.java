@@ -14,4 +14,6 @@ public interface OrderDAO {
     void completeOrder(int orderId);
 
     void paidOrder(int orderId);
+
+    void cancelOrder(int orderId);
 }

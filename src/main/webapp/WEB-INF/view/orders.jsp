@@ -31,6 +31,7 @@
             <sec:authorize access="hasRole('ADMIN')">
                 <th>User</th>
                 <th>Change status</th>
+                <th></th>
             </sec:authorize>
         </tr>
         <c:forEach var="order" items="${orders}">
@@ -52,6 +53,19 @@
                                 </c:when>
                                 <c:otherwise>
                                     <button type="submit">COMPLETE</button>
+                                </c:otherwise>
+                            </c:choose>
+                        </form:form>
+                    </td>
+                    <td>
+                        <form:form action="${pageContext.request.contextPath}/orders/cancel">
+                            <input type="hidden" id="orderId" name="orderId" value="${order.id}"/>
+                            <c:choose>
+                                <c:when test='${order.status.equals("CANCELED")}'>
+                                    <button disabled type="submit">CANCEL</button>
+                                </c:when>
+                                <c:otherwise>
+                                    <button type="submit">CANCEL</button>
                                 </c:otherwise>
                             </c:choose>
                         </form:form>
