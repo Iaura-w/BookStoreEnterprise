@@ -19,14 +19,14 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getOrders() {
         Session session = sessionFactory.getCurrentSession();
-        Query<Order> query = session.createQuery("SELECT o from Order o", Order.class);
+        Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.books ORDER BY o.dateTime DESC", Order.class);
         return query.getResultList();
     }
 
     @Override
     public List<Order> getOrders(String username) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Order> query = session.createQuery("SELECT o from Order o WHERE o.user.username=:username", Order.class).setParameter("username", username);
+        Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.books WHERE o.user.username=:username ORDER BY o.dateTime DESC", Order.class).setParameter("username", username);
         return query.getResultList();
     }
 
