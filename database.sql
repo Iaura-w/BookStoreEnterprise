@@ -103,6 +103,14 @@ CREATE TABLE authorities
         REFERENCES `users` (`username`)
 );
 
+INSERT INTO `users` (`username`, `password`)
+VALUES ('admin', 'admin'),
+       ('user', 'user');
+
+INSERT INTO `authorities` (`username`, `authority`)
+VALUES ('admin', 'ROLE_ADMIN'),
+       ('user', 'ROLE_USER');
+
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`
 (
