@@ -1,6 +1,7 @@
 package org.example.services;
 
 import org.example.dao.OrderDAO;
+import org.example.entity.Book;
 import org.example.entity.Order;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,19 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void paidOrder(int orderId) {
         orderDAO.paidOrder(orderId);
+    }
+
+    @Override
+    @Transactional
+    public boolean isBookInOrder(int bookId) {
+        List<Order> orders = getOrders();
+        for (Order order : orders) {
+            for (Book book : order.getBooks()) {
+                if (book.getId() == bookId) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

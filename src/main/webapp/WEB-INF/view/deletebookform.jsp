@@ -1,4 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Books</title>
@@ -27,6 +29,8 @@
                 <th>Publisher</th>
                 <th>Price</th>
                 <th>Category</th>
+                <th></th>
+                <th></th>
             </tr>
             <tr>
                 <td>${book.name}</td>
@@ -37,7 +41,15 @@
                 <td><label></label></td>
                 <td><form:hidden path="id"/></td>
 
-                <td><input type="submit" value="Delete"/></td>
+                <c:choose>
+                    <c:when test='${canDeleteBook==true}'>
+                        <td><input type="submit" value="Delete"/></td>
+                    </c:when>
+                    <c:otherwise>
+                        <td><input disabled type="submit" value="Delete"/></td>
+                        <td>Book can't be deleted</td>
+                    </c:otherwise>
+                </c:choose>
             </tr>
 
         </table>

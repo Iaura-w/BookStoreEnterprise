@@ -13,7 +13,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -55,12 +54,7 @@ public class Book {
     )
     private Set<Author> authors;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "zamowienia_to_ksiazki",
-            joinColumns = @JoinColumn(name = "ksiazka_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id")
-    )
+    @ManyToMany(mappedBy = "books")
     private List<Order> orders;
 
     public int getId() {
@@ -69,22 +63,6 @@ public class Book {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void addAutor(Author author) {
-        if (authors == null)
-            authors = new HashSet<>();
-        //author.addBook(this);
-        authors.add(author);
-    }
-
-    public void removeAutor(Author author) {
-        if (authors == null)
-            return;
-        //author.addBook(this);
-        authors.remove(author);
-
-
     }
 
     public String getName() {

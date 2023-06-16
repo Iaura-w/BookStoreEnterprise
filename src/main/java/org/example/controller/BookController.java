@@ -7,6 +7,7 @@ import org.example.entity.Category;
 import org.example.services.AuthorService;
 import org.example.services.BookService;
 import org.example.services.CategoryService;
+import org.example.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,9 @@ public class BookController {
 
     @Autowired
     private AuthorService authorService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/list")
     public String listBooks(Model model) {
@@ -91,7 +95,9 @@ public class BookController {
     @GetMapping("/deleteBook")
     public String deleteBookForm(@RequestParam("bookId") int id, Model model) {
         Book book = bookService.getBook(id);
+        boolean canDeleteBook = !orderService.isBookInOrder(id);
         model.addAttribute("book", book);
+        model.addAttribute("canDeleteBook", canDeleteBook);
         return "deletebookform";
     }
 

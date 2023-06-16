@@ -82,6 +82,11 @@ td input[type="submit"] {
     cursor: pointer;
 }
 
+td input[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* Return link styles */
 p a {
     display: inline-block;

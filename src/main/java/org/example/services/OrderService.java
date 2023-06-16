@@ -14,4 +14,6 @@ public interface OrderService {
     void completeOrder(int orderId);
 
     void paidOrder(int orderId);
+
+    boolean isBookInOrder(int bookId);
 }
