@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Order details</title>
+    <title>Order information</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/static/styles.css">
 </head>
 <body>
@@ -20,9 +20,9 @@
         <a href="${pageContext.request.contextPath}/logout">Logout</a>
     </div>
 </nav>
-<h2>Order details:</h2>
+<h2>Order information:</h2>
 <div>
-    <p>Order was successfully paid.</p>
+    <p>${message}</p>
     <p>
         <button onclick="location.href='${pageContext.request.contextPath}/orders'">orders</button>
     </p>

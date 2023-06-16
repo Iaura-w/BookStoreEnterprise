@@ -38,6 +38,7 @@
     </table>
 </div>
 <div>
+    <p>Pay for order</p>
     <form:form action="${redirectUri}">
         <button type="submit">PayU</button>
     </form:form>

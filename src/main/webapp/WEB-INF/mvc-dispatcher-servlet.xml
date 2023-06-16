@@ -83,9 +83,9 @@ http://www.springframework.org/schema/security/spring-security.xsd"
         <sec:intercept-url pattern="/cart/delete" access="hasAuthority('ROLE_USER')"/>
         <sec:intercept-url pattern="/orders" access="isAuthenticated()"/>
         <sec:intercept-url pattern="/orders/complete" access="hasAuthority('ROLE_ADMIN')"/>
-        <sec:intercept-url pattern="/orders/notify" access="permitAll()"/>
-        <sec:intercept-url pattern="/orders/notify/**" access="permitAll()"/>
-        <sec:intercept-url pattern="/orders/continue/*" access="permitAll()"/>
+        <sec:intercept-url pattern="/orders/notify" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/orders/notify/**" access="isAuthenticated()"/>
+        <sec:intercept-url pattern="/orders/continue/*" access="isAuthenticated()"/>
         <sec:intercept-url pattern="/authors/list" access="permitAll()"/>
         <sec:intercept-url pattern="/authors/addAuthor" access="hasAuthority('ROLE_ADMIN')"/>
         <sec:intercept-url pattern="/authors/deleteAuthor" access="hasAuthority('ROLE_ADMIN')"/>

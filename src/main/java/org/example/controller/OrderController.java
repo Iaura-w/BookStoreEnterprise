@@ -32,7 +32,7 @@ public class OrderController {
     private final OrderService orderService;
     private final BookService bookService;
     private final Cart cart;
-    private Map<Integer, String> ordersIdsMap;
+    private final Map<Integer, String> ordersIdsMap;
 
     public OrderController(OrderService orderService, BookService bookService, Cart cart) {
         this.orderService = orderService;
@@ -75,35 +75,30 @@ public class OrderController {
         cart.getBookIds().clear();
 
         PayuResponse payuResponse = sendRequestPayU(order);
-        ordersIdsMap.put(payuResponse.getOrderIdDb(),payuResponse.getOrderId());
+        ordersIdsMap.put(payuResponse.getOrderIdDb(), payuResponse.getOrderId());
         model.addAttribute("order", order);
-        model.addAttribute("redirectUri", payuResponse.redirectUri);
-//        return "redirect:/orders";
+        model.addAttribute("redirectUri", payuResponse.getRedirectUri());
         return "payu";
     }
 
     @PostMapping("/complete")
     public String completeOrder(@RequestParam(name = "orderId") int id) {
-        String payuOrderId = ordersIdsMap.get(id);
         orderService.completeOrder(id);
         return "redirect:/orders";
     }
 
     @GetMapping("/continue/{orderId}")
-    public String payuContinue(@PathVariable int orderId) {
-        orderService.paidOrder(orderId);
-        return "orderdetails";
+    public String payuContinue(@PathVariable int orderId, Model model) {
+        String orderIdPayu = ordersIdsMap.get(orderId);
+        String orderStatusFromPayu = getOrderStatusFromPayu(orderIdPayu);
+        String message ="Order was not paid.";
+        if(!orderStatusFromPayu.equals("CANCELED")) {
+            orderService.paidOrder(orderId);
+            message="Order was successfully paid.";
+        }
+        model.addAttribute("message",message);
+        return "orderinformation";
     }
-
-
-//    @GetMapping(value = "/notify/{orderId}")
-//    public String getPayStatus(@PathVariable String orderId, HttpServletResponse httpServletResponse) {
-//        System.out.println("notify : " + httpServletResponse.getStatus());
-//        System.out.println("notify : " + httpServletResponse);
-//
-//        return "orderdetails";
-////        return httpServletResponse.toString();
-//    }
 
     public PayuResponse sendRequestPayU(Order order) {
         try {
@@ -113,7 +108,6 @@ public class OrderController {
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
             String tokenFromPayu = getTokenFromPayu();
-//            String token = "d9a4536e-62ba-4f60-8017-6053211d3f47";
             connection.setRequestProperty("Authorization", "Bearer " + tokenFromPayu);
             connection.setDoOutput(true);
 
@@ -124,12 +118,6 @@ public class OrderController {
             }
 
             int responseCode = connection.getResponseCode();
-            String responseMessage = connection.getResponseMessage();
-
-            System.out.println("JSON:");
-            System.out.println(jsonInput);
-            System.out.println("response code: " + responseCode);
-            System.out.println("response message: " + responseMessage);
             if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_MOVED_TEMP) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 String inputLine;
@@ -139,7 +127,6 @@ public class OrderController {
                 }
                 in.close();
 
-                System.out.println(response);
                 String redirectUri = extractFromJson(response.toString(), "\"redirectUri\":\"");
                 String payuOrderId = extractFromJson(response.toString(), "\"orderId\":\"");
                 String orderIdDb = extractFromJson(response.toString(), "\"extOrderId\":\"");
@@ -151,7 +138,36 @@ public class OrderController {
         return new PayuResponse();
     }
 
-    public String getTokenFromPayu() {
+    public String getOrderStatusFromPayu(String orderIdPayu) {
+        try {
+            URL url = new URL("https://secure.snd.payu.com/api/v2_1/orders/" + orderIdPayu);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setInstanceFollowRedirects(false);
+            connection.setRequestMethod("GET");
+            String tokenFromPayu = getTokenFromPayu();
+            connection.setRequestProperty("Authorization", "Bearer " + tokenFromPayu);
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                String orderStatus = extractFromJson(response.toString(), "\"status\":\"");
+
+                return orderStatus;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
+    }
+
+    private String getTokenFromPayu() {
         try {
             URL url = new URL("https://secure.snd.payu.com/pl/standard/user/oauth/authorize");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -167,13 +183,6 @@ public class OrderController {
                 os.write(input, 0, input.length);
                 os.flush();
             }
-
-            int responseCode = connection.getResponseCode();
-            String responseMessage = connection.getResponseMessage();
-
-
-            System.out.println("response code: " + responseCode);
-            System.out.println("response message: " + responseMessage);
             BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             StringBuilder response = new StringBuilder();
@@ -182,7 +191,6 @@ public class OrderController {
             }
             in.close();
 
-            System.out.println(response);
             String token = extractFromJson(response.toString(), "\"access_token\":\"");
             return token;
 
@@ -193,11 +201,11 @@ public class OrderController {
     }
 
     private static String extractFromJson(String jsonResponse, String key) {
-        int redirectUriStartIndex = jsonResponse.indexOf(key);
-        if (redirectUriStartIndex != -1) {
-            int redirectUriEndIndex = jsonResponse.indexOf("\"", redirectUriStartIndex + key.length());
-            if (redirectUriEndIndex != -1) {
-                return jsonResponse.substring(redirectUriStartIndex + key.length(), redirectUriEndIndex);
+        int keyStartIndex = jsonResponse.indexOf(key);
+        if (keyStartIndex != -1) {
+            int keyEndIndex = jsonResponse.indexOf("\"", keyStartIndex + key.length());
+            if (keyEndIndex != -1) {
+                return jsonResponse.substring(keyStartIndex + key.length(), keyEndIndex);
             }
         }
         return null;
@@ -212,7 +220,7 @@ public class OrderController {
         jsonBuilder.append("\"merchantPosId\": \"").append("467079").append("\",");
         jsonBuilder.append("\"description\": \"").append("books").append("\",");
         jsonBuilder.append("\"currencyCode\": \"").append("PLN").append("\",");
-        jsonBuilder.append("\"totalAmount\": ").append((int) (order.getPrice() * 100)).append(",");
+        jsonBuilder.append("\"totalAmount\": ").append((int) (Math.round(order.getPrice()*100))).append(",");
         jsonBuilder.append("\"extOrderId\": \"").append(order.getId()).append("\",");
 
         jsonBuilder.append("\"buyer\": {");
@@ -241,7 +249,7 @@ public class OrderController {
         return jsonBuilder.toString();
     }
 
-    private class PayuResponse {
+    private static class PayuResponse {
         private String redirectUri;
         private String orderId;
         private int orderIdDb;
