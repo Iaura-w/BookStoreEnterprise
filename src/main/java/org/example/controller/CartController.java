@@ -30,7 +30,7 @@ public class CartController {
         if (cartBookIds.size() > 0) {
             List<Book> books = bookService.getBooks(cartBookIds);
             float finalPrice = books.stream().map(book -> book.getPrice()).reduce(0.0f, (a, b) -> a + b);
-            finalPrice= (float) Math.round(finalPrice * 100) /100f;
+            finalPrice = (float) Math.round(finalPrice * 100) / 100f;
             model.addAttribute("books", books);
             model.addAttribute("finalPrice", finalPrice);
         } else {

@@ -91,12 +91,12 @@ public class OrderController {
     public String payuContinue(@PathVariable int orderId, Model model) {
         String orderIdPayu = ordersIdsMap.get(orderId);
         String orderStatusFromPayu = getOrderStatusFromPayu(orderIdPayu);
-        String message ="Order was not paid.";
-        if(!orderStatusFromPayu.equals("CANCELED")) {
+        String message = "Order was not paid.";
+        if (!orderStatusFromPayu.equals("CANCELED")) {
             orderService.paidOrder(orderId);
-            message="Order was successfully paid.";
+            message = "Order was successfully paid.";
         }
-        model.addAttribute("message",message);
+        model.addAttribute("message", message);
         return "orderinformation";
     }
 
@@ -220,7 +220,7 @@ public class OrderController {
         jsonBuilder.append("\"merchantPosId\": \"").append("467079").append("\",");
         jsonBuilder.append("\"description\": \"").append("books").append("\",");
         jsonBuilder.append("\"currencyCode\": \"").append("PLN").append("\",");
-        jsonBuilder.append("\"totalAmount\": ").append((int) (Math.round(order.getPrice()*100))).append(",");
+        jsonBuilder.append("\"totalAmount\": ").append((int) (Math.round(order.getPrice() * 100))).append(",");
         jsonBuilder.append("\"extOrderId\": \"").append(order.getId()).append("\",");
 
         jsonBuilder.append("\"buyer\": {");
