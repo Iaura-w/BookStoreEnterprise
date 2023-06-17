@@ -2,6 +2,7 @@ package org.example.services;
 
 import org.example.entity.Book;
 import org.example.entity.Order;
+import org.example.entity.OrderItem;
 import org.example.entity.PayuResponse;
 import org.springframework.stereotype.Service;
 
@@ -149,14 +150,14 @@ public class PaymentServiceImpl implements PaymentService {
         jsonBuilder.append("},");
 
         jsonBuilder.append("\"products\": [");
-        for (int i = 0; i < order.getBooks().size(); i++) {
-            Book book = order.getBooks().get(i);
+        for (int i = 0; i < order.getOrderItems().size(); i++) {
+            OrderItem orderItem = order.getOrderItems().get(i);
             jsonBuilder.append("{");
-            jsonBuilder.append("\"name\": \"").append(book.getName()).append("\",");
-            jsonBuilder.append("\"unitPrice\": ").append((int) (book.getPrice() * 100)).append(",");
-            jsonBuilder.append("\"quantity\": ").append("1");
+            jsonBuilder.append("\"name\": \"").append(orderItem.getBook().getName()).append("\",");
+            jsonBuilder.append("\"unitPrice\": ").append((int) (orderItem.getBook().getPrice() * 100)).append(",");
+            jsonBuilder.append("\"quantity\": ").append(orderItem.getQuantity());
             jsonBuilder.append("}");
-            if (i < order.getBooks().size() - 1) {
+            if (i < order.getOrderItems().size() - 1) {
                 jsonBuilder.append(",");
             }
         }

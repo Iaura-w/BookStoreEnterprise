@@ -5,15 +5,16 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -35,22 +36,31 @@ public class Order {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "username")
     private User user;
-    @ManyToMany
-    @JoinTable(
-            name = "zamowienia_to_ksiazki",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "ksiazka_id")
-    )
-    private List<Book> books;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "zamowienia_to_ksiazki",
+//            joinColumns = @JoinColumn(name = "order_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ksiazka_id")
+//    )
+//    private List<Book> books;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 
     public Order() {
     }
 
-    public Order(float price, User user, List<Book> books) {
+//    public Order(float price, User user, List<Book> books) {
+//        this.price = price;
+//        this.user = user;
+//        this.books = books;
+//    }
+
+
+    public Order(float price, User user, List<OrderItem> orderItems) {
         this.price = price;
         this.user = user;
-        this.books = books;
+        this.orderItems = orderItems;
     }
 
     public int getId() {
@@ -93,12 +103,32 @@ public class Order {
         this.user = user;
     }
 
-    public List<Book> getBooks() {
-        return books;
+//    public List<Book> getBooks() {
+//        return books;
+//    }
+//
+//    public void setBooks(List<Book> books) {
+//        this.books = books;
+//    }
+
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public void addOrderItem(OrderItem orderItem){
+        if(orderItems == null)
+            orderItems = new ArrayList<>();
+        this.orderItems.add(orderItem);
+    }
+
+    public void deleteOrderItem(OrderItem orderItem){
+        if (orderItems != null)
+            orderItems.remove(orderItem);
     }
 
     @Override
@@ -109,7 +139,8 @@ public class Order {
                 ", status='" + status + '\'' +
                 ", dateTime=" + dateTime +
                 ", user=" + user +
-                ", books=" + books +
+                ", orderItems=" + orderItems +
+//                ", books=" + books +
                 '}';
     }
 }

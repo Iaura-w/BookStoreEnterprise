@@ -3,6 +3,7 @@ package org.example.controller;
 import org.example.entity.Book;
 import org.example.entity.Cart;
 import org.example.entity.Order;
+import org.example.entity.OrderItem;
 import org.example.entity.PayuResponse;
 import org.example.entity.User;
 import org.example.services.BookService;
@@ -66,12 +67,16 @@ public class OrderController {
         Order order = new Order();
         order.setStatus("CREATED");
         order.setUser(new User(authentication.getName()));
-        List<Book> books = bookService.getBooks(cart.getBookIds());
-        order.setBooks(books);
-        float price = books.stream().map(book -> book.getPrice()).reduce(0.0f, (a, b) -> a + b);
+
+//        List<Book> books = bookService.getBooks(cart.getBookIds());
+        List<OrderItem> orderItems = cart.getOrderItems();
+        order.setOrderItems(orderItems);
+//        float price = books.stream().map(book -> book.getPrice()).reduce(0.0f, (a, b) -> a + b);
+        float price = orderItems.stream().map(orderItem -> orderItem.getBook().getPrice()*orderItem.getQuantity()).reduce(0.0f, Float::sum);
         order.setPrice(price);
         orderService.saveOrder(order);
-        cart.getBookIds().clear();
+//        cart.getBookIds().clear();
+        cart.getOrderItems().clear();
 
         PayuResponse payuResponse = paymentService.sendRequestPayU(order);
         ordersIdsMap.put(payuResponse.getOrderIdDb(), payuResponse.getOrderId());
