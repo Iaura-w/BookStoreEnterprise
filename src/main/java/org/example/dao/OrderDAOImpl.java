@@ -6,7 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class OrderDAOImpl implements OrderDAO {
@@ -17,17 +18,17 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         Session session = sessionFactory.getCurrentSession();
-        Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.books ORDER BY o.dateTime DESC", Order.class);
-        return query.getResultList();
+        Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.orderItems ORDER BY o.dateTime DESC", Order.class);
+        return query.stream().collect(Collectors.toSet());
     }
 
     @Override
-    public List<Order> getOrders(String username) {
+    public Set<Order> getOrders(String username) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.books WHERE o.user.username=:username ORDER BY o.dateTime DESC", Order.class).setParameter("username", username);
-        return query.getResultList();
+        Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o LEFT JOIN FETCH o.orderItems WHERE o.user.username=:username ORDER BY o.dateTime DESC", Order.class).setParameter("username", username);
+        return query.stream().collect(Collectors.toSet());
     }
 
     @Override

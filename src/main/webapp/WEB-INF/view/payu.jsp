@@ -30,7 +30,8 @@
         </tr>
         <tr>
             <td>
-                <c:forEach var="book" items="${order.books}">${book.name}, </c:forEach>
+                <c:forEach var="orderItem" items="${order.orderItems}">${orderItem.book.name} x${orderItem.quantity}
+                    <br></c:forEach>
             </td>
             <td>${order.price}</td>
             <td>${order.status}</td>

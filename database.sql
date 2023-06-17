@@ -135,3 +135,17 @@ CREATE TABLE `zamowienia_to_ksiazki`
     CONSTRAINT `FK_KSIAZKA` FOREIGN KEY (`ksiazka_id`)
         REFERENCES `ksiazki` (`id`)
 );
+
+drop table if exists order_items;
+CREATE TABLE `order_items`
+(
+    `id`         INT(10) NOT NULL AUTO_INCREMENT,
+    `ksiazka_id` int NOT NULL,
+    `order_id`   int NOT NULL,
+    `quantity`   int,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `ORDER_ITEMS_FK_ORDER` FOREIGN KEY (`order_id`)
+        REFERENCES `orders` (`id`),
+    CONSTRAINT `ORDER_ITEMS_FK_KSIAZKA` FOREIGN KEY (`ksiazka_id`)
+        REFERENCES `ksiazki` (`id`)
+);

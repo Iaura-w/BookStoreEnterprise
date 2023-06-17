@@ -1,13 +1,12 @@
 package org.example.services;
 
 import org.example.dao.OrderDAO;
-import org.example.entity.Book;
 import org.example.entity.Order;
 import org.example.entity.OrderItem;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.Set;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -19,13 +18,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         return orderDAO.getOrders();
     }
 
     @Override
     @Transactional
-    public List<Order> getOrders(String username) {
+    public Set<Order> getOrders(String username) {
         return orderDAO.getOrders(username);
     }
 
@@ -50,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public boolean isBookInOrder(int bookId) {
-        List<Order> orders = getOrders();
+        Set<Order> orders = getOrders();
         for (Order order : orders) {
             for (OrderItem orderItem : order.getOrderItems()) {
                 if (orderItem.getBook().getId() == bookId) {

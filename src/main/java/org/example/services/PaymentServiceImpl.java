@@ -1,6 +1,5 @@
 package org.example.services;
 
-import org.example.entity.Book;
 import org.example.entity.Order;
 import org.example.entity.OrderItem;
 import org.example.entity.PayuResponse;
@@ -150,8 +149,8 @@ public class PaymentServiceImpl implements PaymentService {
         jsonBuilder.append("},");
 
         jsonBuilder.append("\"products\": [");
-        for (int i = 0; i < order.getOrderItems().size(); i++) {
-            OrderItem orderItem = order.getOrderItems().get(i);
+        int i = 0;
+        for (OrderItem orderItem : order.getOrderItems()) {
             jsonBuilder.append("{");
             jsonBuilder.append("\"name\": \"").append(orderItem.getBook().getName()).append("\",");
             jsonBuilder.append("\"unitPrice\": ").append((int) (orderItem.getBook().getPrice() * 100)).append(",");
@@ -160,6 +159,7 @@ public class PaymentServiceImpl implements PaymentService {
             if (i < order.getOrderItems().size() - 1) {
                 jsonBuilder.append(",");
             }
+            i++;
         }
         jsonBuilder.append("]");
         jsonBuilder.append("}");

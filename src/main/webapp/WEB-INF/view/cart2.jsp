@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -28,9 +29,10 @@
             <th>Authors</th>
             <th>Name</th>
             <th>Publisher</th>
-            <th>Category</th>
             <th>Price</th>
+            <th>Category</th>
             <th>Quantity</th>
+            <th>Sum price</th>
             <th>Delete</th>
         </tr>
         <c:forEach var="orderItem" items="${orderItems}">
@@ -42,13 +44,15 @@
                 </td>
                 <td>${orderItem.book.name}</td>
                 <td>${orderItem.book.publisher}</td>
-                <td>${orderItem.book.category.name}</td>
                 <td>${orderItem.book.price}</td>
+                <td>${orderItem.book.category.name}</td>
                 <td>${orderItem.quantity}</td>
+                <td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2"
+                                      value="${orderItem.quantity * orderItem.book.price}"/></td>
 
                 <td>
                     <form:form action="${pageContext.request.contextPath}/cart/delete">
-                        <input type="hidden" id="orderItemId" name="orderItemId" value="${orderItem.id}"/>
+                        <input type="hidden" id="bookId" name="bookId" value="${orderItem.book.id}"/>
                         <button type="submit">delete</button>
                     </form:form>
                 </td>

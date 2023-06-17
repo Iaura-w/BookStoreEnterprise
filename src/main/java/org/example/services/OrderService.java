@@ -2,12 +2,12 @@ package org.example.services;
 
 import org.example.entity.Order;
 
-import java.util.List;
+import java.util.Set;
 
 public interface OrderService {
-    List<Order> getOrders();
+    Set<Order> getOrders();
 
-    List<Order> getOrders(String username);
+    Set<Order> getOrders(String username);
 
     void saveOrder(Order order);
 

@@ -4,27 +4,14 @@ import org.example.services.BookService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @SessionScope
 public class Cart {
-    //    private final List<Integer> bookIds = new ArrayList<>();
-//
-//    public void addBookId(Integer id) {
-//        bookIds.add(id);
-//    }
-//
-//    public void deleteBookId(Integer id) {
-//        bookIds.remove(id);
-//    }
-//
-//    public List<Integer> getBookIds() {
-//        return bookIds;
-//    }
     private final BookService bookService;
-    private final List<OrderItem> orderItems = new ArrayList<>();
+    private final Set<OrderItem> orderItems = new HashSet<>();
 
     public Cart(BookService bookService) {
         this.bookService = bookService;
@@ -41,8 +28,21 @@ public class Cart {
             orderItem = new OrderItem();
             orderItem.setBook(book);
             orderItem.setQuantity(1);
+            orderItems.add(orderItem);
         }
-        orderItems.add(orderItem);
+    }
+
+    public void deleteOrderItem(int bookId) {
+        Book book = bookService.getBook(bookId);
+        OrderItem orderItem = new OrderItem();
+        if (isBookInOrderItems(book)) {
+            orderItem = getOrderItem(book);
+        }
+        orderItems.remove(orderItem);
+    }
+
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     private boolean isBookInOrderItems(Book book) {
@@ -61,14 +61,5 @@ public class Cart {
             }
         }
         return new OrderItem();
-    }
-
-    public void deleteOrderItem(int id) {
-//        orderItems.remove()
-        orderItems.remove(new OrderItem(id));
-    }
-
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
     }
 }

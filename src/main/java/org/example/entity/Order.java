@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -36,28 +36,14 @@ public class Order {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "username")
     private User user;
-//    @ManyToMany
-//    @JoinTable(
-//            name = "zamowienia_to_ksiazki",
-//            joinColumns = @JoinColumn(name = "order_id"),
-//            inverseJoinColumns = @JoinColumn(name = "ksiazka_id")
-//    )
-//    private List<Book> books;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    private Set<OrderItem> orderItems;
 
     public Order() {
     }
 
-//    public Order(float price, User user, List<Book> books) {
-//        this.price = price;
-//        this.user = user;
-//        this.books = books;
-//    }
-
-
-    public Order(float price, User user, List<OrderItem> orderItems) {
+    public Order(float price, User user, Set<OrderItem> orderItems) {
         this.price = price;
         this.user = user;
         this.orderItems = orderItems;
@@ -103,30 +89,22 @@ public class Order {
         this.user = user;
     }
 
-//    public List<Book> getBooks() {
-//        return books;
-//    }
-//
-//    public void setBooks(List<Book> books) {
-//        this.books = books;
-//    }
-
-
-    public List<OrderItem> getOrderItems() {
+    public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
+    public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
+        this.orderItems.forEach(orderItem -> orderItem.setOrder(this));
     }
 
-    public void addOrderItem(OrderItem orderItem){
-        if(orderItems == null)
-            orderItems = new ArrayList<>();
+    public void addOrderItem(OrderItem orderItem) {
+        if (orderItems == null)
+            orderItems = new HashSet<>();
         this.orderItems.add(orderItem);
     }
 
-    public void deleteOrderItem(OrderItem orderItem){
+    public void deleteOrderItem(OrderItem orderItem) {
         if (orderItems != null)
             orderItems.remove(orderItem);
     }
@@ -140,7 +118,6 @@ public class Order {
                 ", dateTime=" + dateTime +
                 ", user=" + user +
                 ", orderItems=" + orderItems +
-//                ", books=" + books +
                 '}';
     }
 }

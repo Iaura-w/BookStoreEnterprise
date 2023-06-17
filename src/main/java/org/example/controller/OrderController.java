@@ -1,12 +1,10 @@
 package org.example.controller;
 
-import org.example.entity.Book;
 import org.example.entity.Cart;
 import org.example.entity.Order;
 import org.example.entity.OrderItem;
 import org.example.entity.PayuResponse;
 import org.example.entity.User;
-import org.example.services.BookService;
 import org.example.services.OrderService;
 import org.example.services.PaymentService;
 import org.springframework.security.core.Authentication;
@@ -21,21 +19,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
     private final OrderService orderService;
-    private final BookService bookService;
     private final PaymentService paymentService;
     private final Cart cart;
     private final Map<Integer, String> ordersIdsMap;
 
-    public OrderController(OrderService orderService, BookService bookService, PaymentService paymentService, Cart cart) {
+    public OrderController(OrderService orderService, PaymentService paymentService, Cart cart) {
         this.orderService = orderService;
-        this.bookService = bookService;
         this.paymentService = paymentService;
         this.cart = cart;
         ordersIdsMap = new HashMap<>();
@@ -45,7 +41,7 @@ public class OrderController {
     @GetMapping
     public String listUserOrders(Authentication authentication, Model model) {
         String username = authentication.getName();
-        List<Order> orders = orderService.getOrders();
+        Set<Order> orders = orderService.getOrders();
         if (hasRoleUser(authentication)) {
             orders = orderService.getOrders(username);
         }
@@ -68,21 +64,18 @@ public class OrderController {
         order.setStatus("CREATED");
         order.setUser(new User(authentication.getName()));
 
-//        List<Book> books = bookService.getBooks(cart.getBookIds());
-        List<OrderItem> orderItems = cart.getOrderItems();
+        Set<OrderItem> orderItems = cart.getOrderItems();
         order.setOrderItems(orderItems);
-//        float price = books.stream().map(book -> book.getPrice()).reduce(0.0f, (a, b) -> a + b);
-        float price = orderItems.stream().map(orderItem -> orderItem.getBook().getPrice()*orderItem.getQuantity()).reduce(0.0f, Float::sum);
+        float price = orderItems.stream().map(orderItem -> orderItem.getBook().getPrice() * orderItem.getQuantity()).reduce(0.0f, Float::sum);
         order.setPrice(price);
         orderService.saveOrder(order);
-//        cart.getBookIds().clear();
-        cart.getOrderItems().clear();
 
         PayuResponse payuResponse = paymentService.sendRequestPayU(order);
         ordersIdsMap.put(payuResponse.getOrderIdDb(), payuResponse.getOrderId());
 
         model.addAttribute("order", order);
         model.addAttribute("redirectUri", payuResponse.getRedirectUri());
+        cart.getOrderItems().clear();
         return "payu";
     }
 
