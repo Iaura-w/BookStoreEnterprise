@@ -1,4 +1,5 @@
 drop table if exists `autorzy_to_ksiazki`;
+drop table if exists `order_items`;
 drop table if exists `ksiazki`;
 drop table if exists `kategorie`;
 drop table if exists `autorzy`;
@@ -83,8 +84,10 @@ VALUES (5, 3);
 INSERT INTO `autorzy_to_ksiazki`
 VALUES (6, 4);
 
-
+drop table if exists `authorities`;
+drop table if exists `orders`;
 drop table if exists `users`;
+
 CREATE TABLE users
 (
     username VARCHAR(25) NOT NULL,
@@ -104,8 +107,8 @@ CREATE TABLE authorities
 );
 
 INSERT INTO `users` (`username`, `password`)
-VALUES ('admin', 'admin'),
-       ('user', 'user');
+VALUES ('admin', '$2a$10$UHXOexOArGUY8G5XyTqx9u5S2hwKkXaGGhY60S4yLk/ghrDvOSQtm'),
+       ('user', '$2a$10$Km9d648ziMNEw1IMuv.fGO.nTv8kOXFMjjbtWT5SmwircJsQge4w.');
 
 INSERT INTO `authorities` (`username`, `authority`)
 VALUES ('admin', 'ROLE_ADMIN'),
@@ -124,19 +127,7 @@ CREATE TABLE `orders`
         REFERENCES `users` (`username`)
 );
 
-drop table if exists zamowienia_to_ksiazki;
-CREATE TABLE `zamowienia_to_ksiazki`
-(
-    `ksiazka_id` int(11) NOT NULL,
-    `order_id`   int(10) NOT NULL,
-    PRIMARY KEY (`order_id`, `ksiazka_id`),
-    CONSTRAINT `FK_ORDER` FOREIGN KEY (`order_id`)
-        REFERENCES `orders` (`id`),
-    CONSTRAINT `FK_KSIAZKA` FOREIGN KEY (`ksiazka_id`)
-        REFERENCES `ksiazki` (`id`)
-);
-
-drop table if exists order_items;
+drop table if exists `order_items`;
 CREATE TABLE `order_items`
 (
     `id`         INT(10) NOT NULL AUTO_INCREMENT,
