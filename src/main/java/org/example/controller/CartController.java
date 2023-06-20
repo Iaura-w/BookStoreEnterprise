@@ -33,7 +33,7 @@ public class CartController {
             model.addAttribute("orderItems", new ArrayList<>());
             model.addAttribute("finalPrice", 0.0);
         }
-        return "cart2";
+        return "cart";
     }
 
     @PostMapping("/add")
@@ -45,6 +45,18 @@ public class CartController {
     @PostMapping("/delete")
     public String deleteFromCart(@RequestParam(name = "bookId") int bookId) {
         cart.deleteOrderItem(bookId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/increase")
+    public String increaseQuantityInCart(@RequestParam(name = "bookId") int bookId) {
+        cart.increaseQuantityOrderItem(bookId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/decrease")
+    public String decreaseQuantityInCart(@RequestParam(name = "bookId") int bookId) {
+        cart.decreaseQuantityOrderItem(bookId);
         return "redirect:/cart";
     }
 }

@@ -66,4 +66,26 @@ public class Cart {
         }
         return new OrderItem();
     }
+
+    public void increaseQuantityOrderItem(int bookId) {
+        Book book = bookService.getBook(bookId);
+        OrderItem orderItem;
+
+        if (isBookInOrderItems(book)) {
+            orderItem = getOrderItem(book);
+            orderItem.setQuantity(orderItem.getQuantity() + 1);
+        }
+    }
+
+    public void decreaseQuantityOrderItem(int bookId) {
+        Book book = bookService.getBook(bookId);
+        OrderItem orderItem;
+
+        if (isBookInOrderItems(book)) {
+            orderItem = getOrderItem(book);
+            int quantity = orderItem.getQuantity();
+            if (quantity > 1)
+                orderItem.setQuantity(quantity - 1);
+        }
+    }
 }

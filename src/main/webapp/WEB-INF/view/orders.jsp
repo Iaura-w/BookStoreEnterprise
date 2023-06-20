@@ -30,8 +30,7 @@
             <th>Status</th>
             <sec:authorize access="hasRole('ADMIN')">
                 <th>User</th>
-                <th>Change status</th>
-                <th></th>
+                <th colspan="2">Change status</th>
             </sec:authorize>
         </tr>
         <c:forEach var="order" items="${orders}">
