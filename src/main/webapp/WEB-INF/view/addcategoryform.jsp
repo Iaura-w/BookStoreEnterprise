@@ -22,6 +22,7 @@
 <form:form action="addCategory" modelAttribute="category" method="POST">
 
     <table>
+        <td><form:hidden path="id"/></td>
         <tbody>
         <tr>
             <td><label>name:</label></td>

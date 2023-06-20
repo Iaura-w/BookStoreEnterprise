@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -39,5 +40,15 @@ public class CategoryController {
     public String addCategory(@ModelAttribute("category") Category category) {
         categoryService.addCategory(category);
         return "redirect:/categories/list";
+    }
+
+    @GetMapping("/updateCategoryForm")
+    public String updateBookForm(@RequestParam("categoryId") int id, Model model) {
+        Category category = categoryService.getCategory(id);
+        if (category == null) {
+            category = new Category();
+        }
+        model.addAttribute("category", category);
+        return "addcategoryform";
     }
 }

@@ -24,10 +24,23 @@
     <table>
         <tr>
             <th>Name</th>
+            <sec:authorize access="hasRole('ADMIN')">
+                <th></th>
+                <th>Update</th>
+            </sec:authorize>
         </tr>
         <c:forEach var="category" items="${categories}">
             <tr>
                 <td>${category.name}</td>
+                <sec:authorize access="hasRole('ADMIN')">
+                    <td>
+                        <c:url var="update" value="/categories/updateCategoryForm">
+                            <c:param name="categoryId" value="${category.id}"/></c:url>
+                    </td>
+                    <td>
+                        <button onclick="location.href='${update}'">UPDATE</button>
+                    </td>
+                </sec:authorize>
             </tr>
         </c:forEach>
     </table>

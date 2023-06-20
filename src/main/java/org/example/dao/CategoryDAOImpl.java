@@ -29,7 +29,7 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public void saveCategory(Category category) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(category);
+        session.saveOrUpdate(category);
     }
 
     @Override
