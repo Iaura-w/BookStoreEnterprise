@@ -54,4 +54,14 @@ public class AuthorController {
         authorService.deleteAuthor(author);
         return "redirect:/authors/list";
     }
+
+    @GetMapping("/updateAuthorForm")
+    public String updateBookForm(@RequestParam("authorId") int id, Model model) {
+        Author author = authorService.getAuthor(id);
+        if (author == null) {
+            author = new Author();
+        }
+        model.addAttribute("author", author);
+        return "addauthorform";
+    }
 }

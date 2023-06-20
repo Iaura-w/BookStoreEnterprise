@@ -27,6 +27,8 @@
             <th>Last name</th>
             <sec:authorize access="hasRole('ADMIN')">
                 <th></th>
+                <th>Update</th>
+                <th></th>
                 <th>Delete</th>
             </sec:authorize>
         </tr>
@@ -35,6 +37,13 @@
                 <td>${author.name}</td>
                 <td>${author.lastName}</td>
                 <sec:authorize access="hasRole('ADMIN')">
+                    <td>
+                        <c:url var="update" value="/authors/updateAuthorForm">
+                            <c:param name="authorId" value="${author.id}"/></c:url>
+                    </td>
+                    <td>
+                        <button onclick="location.href='${update}'">UPDATE</button>
+                    </td>
                     <td>
                         <c:url var="delete" value="/authors/deleteAuthor">
                             <c:param name="authorId" value="${author.id}"/></c:url>
