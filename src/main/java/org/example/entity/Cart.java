@@ -45,6 +45,10 @@ public class Cart {
         return orderItems;
     }
 
+    public void cleanCart() {
+        orderItems.clear();
+    }
+
     private boolean isBookInOrderItems(Book book) {
         for (OrderItem orderItem : orderItems) {
             if (orderItem.getBook().getId() == book.getId()) {

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -41,7 +43,7 @@ public class OrderController {
     @GetMapping
     public String listUserOrders(Authentication authentication, Model model) {
         String username = authentication.getName();
-        Set<Order> orders = orderService.getOrders();
+        List<Order> orders = orderService.getOrders();
         if (hasRoleUser(authentication)) {
             orders = orderService.getOrders(username);
         }
@@ -64,7 +66,7 @@ public class OrderController {
         order.setStatus("CREATED");
         order.setUser(new User(authentication.getName()));
 
-        Set<OrderItem> orderItems = cart.getOrderItems();
+        Set<OrderItem> orderItems = new HashSet<>(cart.getOrderItems());
         order.setOrderItems(orderItems);
         float price = orderItems.stream().map(orderItem -> orderItem.getBook().getPrice() * orderItem.getQuantity()).reduce(0.0f, Float::sum);
         order.setPrice(price);
@@ -75,7 +77,6 @@ public class OrderController {
 
         model.addAttribute("order", order);
         model.addAttribute("redirectUri", payuResponse.getRedirectUri());
-        cart.getOrderItems().clear();
         return "payu";
     }
 
@@ -92,12 +93,13 @@ public class OrderController {
     }
 
     @GetMapping("/continue/{orderId}")
-    public String payuContinue(@PathVariable int orderId, Model model) {
+    public String payuContinue(@PathVariable int orderId, @RequestParam(name = "error", required = false) String error, Model model) {
         String orderIdPayu = ordersIdsMap.get(orderId);
-        String orderStatusFromPayu = paymentService.getOrderStatusFromPayu(orderIdPayu);
+//        String orderStatusFromPayu = paymentService.getOrderStatusFromPayu(orderIdPayu);
         String message = "Order was not paid.";
 
-        if (!orderStatusFromPayu.equals("CANCELED")) {
+//        if (!orderStatusFromPayu.equals("CANCELED")) {
+        if (error == null) {
             orderService.paidOrder(orderId);
             message = "Order was successfully paid.";
         }

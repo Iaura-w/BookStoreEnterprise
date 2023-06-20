@@ -6,7 +6,7 @@ import org.example.entity.OrderItem;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -18,13 +18,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Set<Order> getOrders() {
+    public List<Order> getOrders() {
         return orderDAO.getOrders();
     }
 
     @Override
     @Transactional
-    public Set<Order> getOrders(String username) {
+    public List<Order> getOrders(String username) {
         return orderDAO.getOrders(username);
     }
 
@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public boolean isBookInOrder(int bookId) {
-        Set<Order> orders = getOrders();
+        List<Order> orders = getOrders();
         for (Order order : orders) {
             for (OrderItem orderItem : order.getOrderItems()) {
                 if (orderItem.getBook().getId() == bookId) {

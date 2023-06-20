@@ -2,12 +2,12 @@ package org.example.dao;
 
 import org.example.entity.Order;
 
-import java.util.Set;
+import java.util.List;
 
 public interface OrderDAO {
-    Set<Order> getOrders();
+    List<Order> getOrders();
 
-    Set<Order> getOrders(String username);
+    List<Order> getOrders(String username);
 
     void saveOrder(Order order);
 
