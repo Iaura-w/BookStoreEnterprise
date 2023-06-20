@@ -14,7 +14,14 @@ Aplikacja webowa do zarządzanie księgarnią internetową.
    - user może przeglądać zawartość koszyka
 4. Zamówienia
    - user może składać zamówienia na książki znajdujące się w koszyku
+   - admin ma podgląd wszystkich zamówień
    - admin może zmieniać status zamówienia
 5. Płatności
    - integracja z systemem płatności PayU
    - user może dokonywać płatności za zamówienie
+
+## Uruchomienie
+- Tomcat:
+   - Windows: startup
+   - Linux: ./startup.sh
+- domyślnie aplikacja działa na: http://localhost:8080/bookStore
