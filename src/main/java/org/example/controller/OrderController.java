@@ -18,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -30,13 +28,11 @@ public class OrderController {
     private final OrderService orderService;
     private final PaymentService paymentService;
     private final Cart cart;
-    private final Map<Integer, String> ordersIdsMap;
 
     public OrderController(OrderService orderService, PaymentService paymentService, Cart cart) {
         this.orderService = orderService;
         this.paymentService = paymentService;
         this.cart = cart;
-        ordersIdsMap = new HashMap<>();
     }
 
 
@@ -73,10 +69,10 @@ public class OrderController {
         orderService.saveOrder(order);
 
         PayuResponse payuResponse = paymentService.sendRequestPayU(order);
-        ordersIdsMap.put(payuResponse.getOrderIdDb(), payuResponse.getOrderId());
 
         model.addAttribute("order", order);
         model.addAttribute("redirectUri", payuResponse.getRedirectUri());
+        cart.cleanCart();
         return "payu";
     }
 
@@ -94,11 +90,8 @@ public class OrderController {
 
     @GetMapping("/continue/{orderId}")
     public String payuContinue(@PathVariable int orderId, @RequestParam(name = "error", required = false) String error, Model model) {
-        String orderIdPayu = ordersIdsMap.get(orderId);
-//        String orderStatusFromPayu = paymentService.getOrderStatusFromPayu(orderIdPayu);
         String message = "Order was not paid.";
 
-//        if (!orderStatusFromPayu.equals("CANCELED")) {
         if (error == null) {
             orderService.paidOrder(orderId);
             message = "Order was successfully paid.";

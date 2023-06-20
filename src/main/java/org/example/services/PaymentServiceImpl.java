@@ -45,44 +45,13 @@ public class PaymentServiceImpl implements PaymentService {
                 in.close();
 
                 String redirectUri = extractFromJson(response.toString(), "\"redirectUri\":\"");
-                String payuOrderId = extractFromJson(response.toString(), "\"orderId\":\"");
-                String orderIdDb = extractFromJson(response.toString(), "\"extOrderId\":\"");
-                return new PayuResponse(redirectUri, payuOrderId, Integer.parseInt(orderIdDb));
+
+                return new PayuResponse(redirectUri);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         return new PayuResponse();
-    }
-
-    @Override
-    public String getOrderStatusFromPayu(String orderIdPayu) {
-        try {
-            URL url = new URL(PAYU_API_ORDERS_URL + orderIdPayu);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setInstanceFollowRedirects(false);
-            connection.setRequestMethod("GET");
-            String tokenFromPayu = getAuthorizationTokenFromPayu();
-            connection.setRequestProperty("Authorization", "Bearer " + tokenFromPayu);
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-                String orderStatus = extractFromJson(response.toString(), "\"status\":\"");
-
-                return orderStatus;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-        return "";
     }
 
     private String getAuthorizationTokenFromPayu() {
@@ -138,7 +107,6 @@ public class PaymentServiceImpl implements PaymentService {
         jsonBuilder.append("\"description\": \"").append("books").append("\",");
         jsonBuilder.append("\"currencyCode\": \"").append("PLN").append("\",");
         jsonBuilder.append("\"totalAmount\": ").append((int) (Math.round(order.getPrice() * 100))).append(",");
-        jsonBuilder.append("\"extOrderId\": \"").append(order.getId()).append("\",");
 
         jsonBuilder.append("\"buyer\": {");
         jsonBuilder.append("\"email\": \"").append(order.getUser().getUsername()).append("@example.com").append("\",");

@@ -5,6 +5,4 @@ import org.example.entity.PayuResponse;
 
 public interface PaymentService {
     PayuResponse sendRequestPayU(Order order);
-
-    String getOrderStatusFromPayu(String orderIdPayu);
 }
