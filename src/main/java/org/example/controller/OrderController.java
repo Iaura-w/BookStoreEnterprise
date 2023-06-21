@@ -90,11 +90,14 @@ public class OrderController {
 
     @GetMapping("/continue/{orderId}")
     public String payuContinue(@PathVariable int orderId, @RequestParam(name = "error", required = false) String error, Model model) {
-        String message = "Order was not paid.";
+        String message;
 
         if (error == null) {
             orderService.paidOrder(orderId);
             message = "Order was successfully paid.";
+        } else {
+            orderService.cancelOrder(orderId);
+            message = "Order was not paid.";
         }
         model.addAttribute("message", message);
         return "orderinformation";
