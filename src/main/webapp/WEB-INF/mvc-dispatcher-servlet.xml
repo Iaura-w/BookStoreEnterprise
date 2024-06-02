@@ -35,7 +35,8 @@ http://www.springframework.org/schema/security/spring-security.xsd"
     <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
         <property name="driverClass" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://db4free.net/bookstore_ent?serverTimezone=Europe/Warsaw"/>
+<!--        <property name="jdbcUrl" value="jdbc:mysql://db4free.net/bookstore_ent?serverTimezone=Europe/Warsaw"/>-->
+        <property name="jdbcUrl" value="jdbc:mysql://db:3306/bookstore_ent"/>
         <property name="user" value="bookstore_ent"/>
         <property name="password" value="BooksEnt"/>
         <!-- these are connection pool properties for C3P0 -->

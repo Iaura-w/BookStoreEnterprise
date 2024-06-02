@@ -1,0 +1,28 @@
+#version: '3.1'
+
+services:
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_USER: bookstore_ent
+      MYSQL_PASSWORD: BooksEnt
+      MYSQL_DATABASE: bookstore_ent
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8090:8090"
+  web:
+    image: tomcat:9.0.88-jdk17
+    volumes:
+      - ../build/libs/bookStore.war:/usr/local/tomcat/webapps/bookStore.war
+    ports:
+      - "8080:8080"
