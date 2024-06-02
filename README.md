@@ -21,6 +21,7 @@ Aplikacja webowa do zarządzanie księgarnią internetową.
    - user może dokonywać płatności za zamówienie
 
 ## Uruchomienie
+- cd db, docker-compose up
 - Tomcat:
    - Windows: startup
    - Linux: ./startup.sh
