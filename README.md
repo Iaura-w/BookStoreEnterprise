@@ -55,6 +55,14 @@ BookStoreEnterprise is a web application for managing an online bookstore, provi
 - Order view after successfull payment:
 
   <img src="https://github.com/user-attachments/assets/142e6e36-8f6b-48a4-8b36-fa33c6915234" width=800>
+2. Admin interface:
+- Books view:
+
+  <img src="https://github.com/user-attachments/assets/6c9e3f03-867c-40cd-8ace-c2528de0b057" width=800>
+
+- Orders view:
+  
+  <img src="https://github.com/user-attachments/assets/5f28bc15-a453-47c9-ab2c-e256242e1cd7" width=800>
 
 
 
