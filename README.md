@@ -34,3 +34,28 @@ BookStoreEnterprise is a web application for managing an online bookstore, provi
   docker-compose up```
 2. Access the Application:
 - The application will be available at: ```http://localhost:8080/bookStore```
+3. Sample login cridentials:
+  - As user: login: user, password: user
+  - As admin: login: admin, password: admin
+ 
+## Screenshots
+1. User interface:
+- Books view:
+  
+   <img src="https://github.com/user-attachments/assets/060460bd-f5e2-44d9-a913-240f3a659f2d" width="800">
+- Cart view:
+
+   <img src="https://github.com/user-attachments/assets/08df4b87-4984-41cf-bf16-ef4b33be7d78" width="800">
+- Order details:
+
+   <img src="https://github.com/user-attachments/assets/d186b88c-9811-472f-831c-96a2f95db9f9" width=800>
+- PayU page:
+
+   <img src="https://github.com/user-attachments/assets/01ce6ee3-78c5-4b16-990f-85abb035ca01" width=800>
+- Order view after successfull payment:
+
+  <img src="https://github.com/user-attachments/assets/142e6e36-8f6b-48a4-8b36-fa33c6915234" width=800>
+
+
+
+
