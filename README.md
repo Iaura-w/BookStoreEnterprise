@@ -29,11 +29,8 @@ BookStoreEnterprise is a web application for managing an online bookstore, provi
    - Tomcat: Web server used to deploy and run the application.
 
 ## Getting Started
-1. Database Setup:
+1. Start the application with Tomcat::
 - Navigate to the db directory and start the services using Docker: ```cd db;
   docker-compose up```
-2. Start the application with Tomcat:
-  - Windows: ```startup```
-   - Linux: ```./startup.sh```
-3. Access the Application:
+2. Access the Application:
 - The application will be available at: ```http://localhost:8080/bookStore```
